@@ -21,8 +21,6 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Autonomous(name = "RoadRunnerTest", group = "")
 public class RoadRunnerTest extends ActionOpMode {
     public static double MOTOR_POWER = 0.7;
-    private Servo gripper = null; //Located on Expansion Hub- Servo port 0
-    private DcMotor arm = null;
 
     static final float MAX_SPEED = 1.0f;
     static final float MIN_SPEED = 0.4f;
@@ -31,10 +29,12 @@ public class RoadRunnerTest extends ActionOpMode {
     public MecanumDrive drive;
     public Telemetry telemetry;
     private  OpenCvCamera webCam;
+    private Servo gripper;
+    private DcMotor arm;
     private boolean isCameraStreaming = false;
     Pipeline modifyPipeline = new Pipeline();
     private int resultROI=2;
-    private  boolean done = false;
+    private boolean done;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -45,12 +45,6 @@ public class RoadRunnerTest extends ActionOpMode {
         drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
 
         telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
-
-        telemetry.addLine("Press play to begin the debugging op mode");
-        telemetry.update();
-
-        waitForStart();
-
         arm = hardwareMap.get(DcMotor.class, "arm");
         gripper = hardwareMap.get(Servo.class, "gripper");
 
@@ -70,6 +64,11 @@ public class RoadRunnerTest extends ActionOpMode {
 
         actuatorUtils.initializeActuator(arm, gripper);
 
+        telemetry.addLine("Press play to begin the debugging op mode");
+        telemetry.update();
+
+        waitForStart();
+
         Long startTime = System.currentTimeMillis();
         Long currTime = startTime;
 
@@ -77,10 +76,6 @@ public class RoadRunnerTest extends ActionOpMode {
 
         actuatorUtils.gripperClose(false);
 
-
-        waitForStart();
-        currTime=System.currentTimeMillis();
-        startTime=currTime;
         if (resultROI == 2) {
 
             // getUpdatedRecognitions() will return null if no new information is available since
