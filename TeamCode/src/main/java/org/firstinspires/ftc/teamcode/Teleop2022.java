@@ -60,7 +60,21 @@ public class Teleop2022 extends OpMode {
         RF.setDirection(DcMotor.Direction.REVERSE);
         LB.setDirection(DcMotor.Direction.FORWARD);
         RB.setDirection(DcMotor.Direction.REVERSE);
+        LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        // Not technically encoder but...
+        LF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        LB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        RB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        // Only using the Back motor Encoders
+        LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //Reverse the arm direction so it moves in the proper direction
         arm.setDirection(DcMotor.Direction.REVERSE);
         //Set arm up to use encoders
@@ -199,6 +213,10 @@ public class Teleop2022 extends OpMode {
         }
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status","Run Time: "+runtime.toString());
+        telemetry.addData("LF Position", LF.getCurrentPosition());
+        telemetry.addData("LB Position", LB.getCurrentPosition());
+        telemetry.addData("RF Position", RF.getCurrentPosition());
+        telemetry.addData("RB Position", RB.getCurrentPosition());
         //  telemetry.addData("positionTarget: ", "%.2f", positionTarget);
     }
 

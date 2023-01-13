@@ -41,7 +41,7 @@ final class DriveView {
 
     public final VoltageSensor voltageSensor;
 
-    private final MecanumDrive md;
+    public final MecanumDrive md;
     private final TankDrive td;
 
     private static RawEncoder unwrap(Encoder e) {
