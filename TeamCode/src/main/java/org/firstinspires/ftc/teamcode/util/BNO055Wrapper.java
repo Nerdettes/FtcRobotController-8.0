@@ -1,23 +1,23 @@
 package org.firstinspires.ftc.teamcode.util;
 
 import com.acmerobotics.roadrunner.Rotation2d;
-import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public final class BNO055Wrapper {
-    private final BNO055IMU bno;
+    private final IMU bno;
 
-    public BNO055Wrapper(BNO055IMU bno) {
+    public BNO055Wrapper(IMU bno) {
         this.bno = bno;
     }
 
     public Rotation2d getHeading() {
-        return Rotation2d.exp(bno.getAngularOrientation()
-                .toAngleUnit(AngleUnit.RADIANS)
-                .toAxesOrder(AxesOrder.ZYX)
+
+        return Rotation2d.exp(bno.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS)
                 .firstAngle);
     }
 
@@ -26,7 +26,7 @@ public final class BNO055Wrapper {
     }
 
     public AngularVelocity getAngularVelocity() {
-        return bno.getAngularVelocity().toAngleUnit(AngleUnit.RADIANS);
+        return bno.getRobotAngularVelocity(AngleUnit.RADIANS);
     }
 
     /**
@@ -71,6 +71,7 @@ public final class BNO055Wrapper {
      * @param signs axes signs
      */
     public void swapThenFlipAxes(AxesOrder order, AxesSigns signs) {
+        /*
         try {
             // the indices correspond with the 2-bit axis encodings specified in the datasheet
             int[] indices = order.indices();
@@ -89,21 +90,21 @@ public final class BNO055Wrapper {
                     && (!isXSwapped || !isYSwapped || !isZSwapped);
             boolean oddNumOfFlips = (((axisMapSigns >> 2) ^ (axisMapSigns >> 1) ^ axisMapSigns) & 1) == 1;
             // != functions as xor
-            if (areTwoAxesSwapped != oddNumOfFlips) {
-                throw new RuntimeException("Coordinate system is left-handed");
-            }
+            //if (areTwoAxesSwapped != oddNumOfFlips) {
+            //    throw new RuntimeException("Coordinate system is left-handed");
+            //}
 
             // Bit:  7  6 |  5  4  |  3  2  |  1  0  |
             //   reserved | z axis | y axis | x axis |
             int axisMapConfig = indices[2] << 4 | indices[1] << 2 | indices[0];
 
             // Enter CONFIG mode
-            bno.write8(BNO055IMU.Register.OPR_MODE, BNO055IMU.SensorMode.CONFIG.bVal & 0x0F);
+            bno.write8(IMU.Register.OPR_MODE, IMU.SensorMode.CONFIG.bVal & 0x0F);
 
             Thread.sleep(100);
 
             // Write the AXIS_MAP_CONFIG register
-            bno.write8(BNO055IMU.Register.AXIS_MAP_CONFIG, axisMapConfig & 0x3F);
+            bno.write8(IMU.Register.AXIS_MAP_CONFIG, axisMapConfig & 0x3F);
 
             // Write the AXIS_MAP_SIGN register
             bno.write8(BNO055IMU.Register.AXIS_MAP_SIGN, axisMapSigns & 0x07);
@@ -115,6 +116,7 @@ public final class BNO055Wrapper {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+         */
     }
 
     /**

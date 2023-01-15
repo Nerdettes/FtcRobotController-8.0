@@ -13,9 +13,10 @@ public final class RawEncoder implements Encoder {
     }
 
     private int applyDirection(int x) {
-        if (m.getDirection() == DcMotorSimple.Direction.REVERSE) {
-            x = -x;
-        }
+        // This is already done by the DcMotorEx routines.  This is undoing what it is doing
+        //if (m.getDirection() == DcMotorSimple.Direction.REVERSE) {
+        //    x = -x;
+        //}
 
         if (direction == DcMotorSimple.Direction.REVERSE) {
             x = -x;

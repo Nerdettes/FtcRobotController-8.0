@@ -27,8 +27,9 @@ import com.acmerobotics.roadrunner.Twist2dDual;
 import com.acmerobotics.roadrunner.Twist2dIncrDual;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.VelConstraint;
-import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -42,6 +43,8 @@ import org.firstinspires.ftc.teamcode.util.LynxFirmwareVersion;
 import org.firstinspires.ftc.teamcode.util.OverflowEncoder;
 import org.firstinspires.ftc.teamcode.util.RawEncoder;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,14 +52,14 @@ import java.util.List;
 @Config
 public final class MecanumDrive {
     // drive model parameters
-    public static double IN_PER_TICK = 0.030880;
-    public static double LATERAL_IN_PER_TICK = 1;
-    public static double TRACK_WIDTH_TICKS = 0;
+    public static double IN_PER_TICK = 0.0315758117366696;
+    public static double LATERAL_IN_PER_TICK = 0.0334742776603242;
+    public static double TRACK_WIDTH_TICKS = 369.8130583700551;
 
     // feedforward parameters
-    public static double kS = 0;
-    public static double kV = 0;
-    public static double kA = 0;
+    public static double kS = 1.0341777144306228;
+    public static double kV = 0.004410850017067553;
+    public static double kA = 0.125;
 
     // path profile parameters
     public static double MAX_WHEEL_VEL = 50;
@@ -180,19 +183,14 @@ public final class MecanumDrive {
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        BNO055IMU baseImu = hardwareMap.get(BNO055IMU.class, "imu");
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
+        IMU baseImu = hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP));
 
-        /* From User Code
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        */
-        parameters.loggingEnabled = true;
-        parameters.loggingTag = "IMU";
         baseImu.initialize(parameters);
         imu = new BNO055Wrapper(baseImu);
+        //imu.remapZAxis(BNO055Wrapper.AxisDirection.POS_X);
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 

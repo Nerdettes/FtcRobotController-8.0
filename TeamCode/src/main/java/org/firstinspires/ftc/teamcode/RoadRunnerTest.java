@@ -27,7 +27,7 @@ public class RoadRunnerTest extends ActionOpMode {
     static final int ACCEL = 75;  // Scaling factor used in accel / decel code.  Was 100!
 
     public MecanumDrive drive;
-    public Telemetry telemetry;
+    //public MultipleTelemetry telemetry;
     private  OpenCvCamera webCam;
     private Servo gripper;
     private DcMotor arm;
@@ -44,7 +44,7 @@ public class RoadRunnerTest extends ActionOpMode {
 
         drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
 
-        telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+        //telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         arm = hardwareMap.get(DcMotor.class, "arm");
         gripper = hardwareMap.get(Servo.class, "gripper");
 
@@ -75,7 +75,6 @@ public class RoadRunnerTest extends ActionOpMode {
         initOpenCV();
 
         actuatorUtils.gripperClose(false);
-
         if (resultROI == 2) {
 
             // getUpdatedRecognitions() will return null if no new information is available since
@@ -110,15 +109,16 @@ public class RoadRunnerTest extends ActionOpMode {
         done = false;
         //lift arm up
         actuatorUtils.armPole(4);
+
+        Pose2d pose = new Pose2d(new Vector2d(-40, -62), Math.toRadians(0));
         while (((currTime - startTime) < 30000)&& !done && opModeIsActive()) {
 
             switch (resultROI) {
                 case 1:
                     // Far left
                     runBlocking(
-                            drive.actionBuilder(drive.pose)
-                                    .splineTo(new Vector2d(30, 30), Math.PI / 2)
-                                    .splineTo(new Vector2d(60, 0), Math.PI)
+                            drive.actionBuilder(pose)
+                                    .lineToY(24)
                                     .build());
                     actuatorUtils.gripperOpen(true);
                     done=true;
@@ -126,9 +126,9 @@ public class RoadRunnerTest extends ActionOpMode {
                 case 2:
                     // Middle
                     runBlocking(
-                            drive.actionBuilder(drive.pose)
-                                    .splineTo(new Vector2d(25, 30), Math.PI / 2)
-                                    .splineTo(new Vector2d(60, 0), Math.PI)
+                            drive.actionBuilder(pose)
+                                    .splineTo(new Vector2d(25, 30), 0)
+                                    .splineTo(new Vector2d(60, 0), 0)
                                     .build());
                     actuatorUtils.gripperOpen(true);
                     done=true;
@@ -136,9 +136,9 @@ public class RoadRunnerTest extends ActionOpMode {
                 case 3:
                     // Far right
                     runBlocking(
-                            drive.actionBuilder(drive.pose)
-                                    .splineTo(new Vector2d(30, 25), Math.PI / 2)
-                                    .splineTo(new Vector2d(60, 0), Math.PI)
+                            drive.actionBuilder(pose)
+                                    .splineTo(new Vector2d(-30, -25), Math.PI / 2)
+                                    .splineTo(new Vector2d(-60, 0), Math.PI)
                                     .build());
                     actuatorUtils.gripperOpen(true);
                     done=true;
