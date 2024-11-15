@@ -82,22 +82,40 @@ public class LeftPath extends LinearOpMode {
 
 
         move.driveSeq(startPose.getX()+12,startPose.getY(),0);
-        utils.setArm(actuatorUtils.ArmModes.UP);
-        utils.setLift(actuatorUtils.LiftLevel.HIGH_BASKET);
-        move.driveSeq(-52,52,135);
+        move.driveSeq(-47,53,130);
        // utils.setLift(actuatorUtils.LiftLevel.HIGH_BASKET);
        // sleep(3000);
         //move.driveSeq(-57,57,135);
-        //sleep(1000);
+        sleep(1000);
+        utils.setArm(actuatorUtils.ArmModes.UP);
+
+        //telemetry.addData("arm: ",arm.getCurrentPosition());
+        //telemetry.update();
+
+        //drop the sample
+        sleep(1000);
+        utils.setLift(actuatorUtils.LiftLevel.HIGH_BASKET);
+        sleep(4000);
         utils.setIntake(actuatorUtils.IntakeModes.OUT);
         sleep(2000);
-        utils.setArm(actuatorUtils.ArmModes.REST);
-        utils.setIntake(actuatorUtils.IntakeModes.OFF);
-        move.driveSeq(-36,36,135);
+
+        //back up from the baskets
+        move.driveSeq(-36,36,130);
         sleep(1000);
-        utils.setLift(actuatorUtils.LiftLevel.PARK);
+        utils.setLift(actuatorUtils.LiftLevel.ZERO);
+        sleep(1000);
+        utils.setArm(actuatorUtils.ArmModes.DOWN);
+        utils.setIntake(actuatorUtils.IntakeModes.OFF);
+        sleep(2000);
+
+        //drive to chamber
         move.driveSeq(-12,36,-90);
-        move.driveSeq(-12,24,-90);
+        utils.setArm(actuatorUtils.ArmModes.REST);
+        utils.setLift(actuatorUtils.LiftLevel.PARK);
+        sleep(1000);
+        move.driveSeq(-12,23,-90);
+
+
        // utils.setArm(actuatorUtils.ArmModes.REST);
         sleep(1000);
         Pose2d pose = drive.getPoseEstimate();

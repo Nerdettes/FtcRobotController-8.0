@@ -39,7 +39,7 @@ public class moveUtils {
     private static float globalAngle = 0f;
     private static double rotation;
 
-    static final float EncoderTicks = 537.6f;
+    static final float EncoderTicks = 8192f; //was 537.6 for yellow jacket 312 RPM motor, 8192 for through bore encoder
     static final float WHEEL_DIAMETER_INCHES = 4.0f;
     static final float REVS_PER_INCH_MOD = 50f/72f;
     static final float COUNTS_PER_INCH = (EncoderTicks * REVS_PER_INCH_MOD) / (3.1416f * WHEEL_DIAMETER_INCHES);
