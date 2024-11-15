@@ -14,16 +14,16 @@ public class actuatorUtils {
     private static CRServo intake = null; //declare dump
     private static Servo wrist = null;
     //test
-    public static int upEncode = 1000; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
-    private static int restEncode = 2000; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
+    public static int upEncode = 1650; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
+    private static int restEncode = 1180; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
     public static int downEncode = 0; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
     private static double armPower = 1.0; //Set power to .7 so arm does not go up too fast
-    private static int maxEncode = 3100; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
+    private static int maxEncode = 3300; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
     private static int minEncode = 0; //Minimum so string on arm lift doesn't break and position 0
     private static int lowEncode = 1600; //Minimum so string on arm lift doesn't break and position 0
     private static int highEncode = maxEncode; //Minimum so string on arm lift doesn't break and position 0
     private static double liftPower = .7f; //Set power to .7 so arm does not go up too fast
-    private static int parkEncode = 1100;
+    private static int parkEncode = 850;
     enum LiftLevel
     {
         ZERO,
@@ -76,6 +76,7 @@ public class actuatorUtils {
             arm.setTargetPosition(upEncode); //Lifts arm up so we can move w/o drag
             arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             arm.setPower(armPower);
+
 
 
         } else if (mode == ArmModes.REST) {

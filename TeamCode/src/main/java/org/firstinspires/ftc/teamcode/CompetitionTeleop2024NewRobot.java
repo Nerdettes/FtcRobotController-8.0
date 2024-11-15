@@ -178,7 +178,7 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         telemetry.addData("Right Front Motor","Speed: "+RFPower);
         telemetry.addData("Right Back Motor","Speed: "+ RBPower);
         //telemetry.addData("Intake Motor", "Speed: = "+ intakePower);
-        //telemetry.addData("Arm Encoder Height","Height: "+arm.getCurrentPosition());
+        telemetry.addData("Arm Encoder Height","Height: "+arm.getCurrentPosition());
         //telemetry.addData("Initial Heading", "Heading: "+initHeading);
 
         //Code for gamepad2
