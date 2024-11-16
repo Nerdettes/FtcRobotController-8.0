@@ -126,13 +126,9 @@ public class LeftPath extends LinearOpMode {
     }
 
 
-
-
     public double getHeading() {
         double angle = drive.getRawExternalHeading();
         return angle;
     }
 
 }
-
-
