@@ -96,10 +96,14 @@ public class LeftPath extends LinearOpMode {
         sleep(1000);
         utils.setLift(actuatorUtils.LiftLevel.HIGH_BASKET);
         sleep(4000);
+        move.driveSeq(-49,55,130);
+        sleep(1000);
+        utils.setArm(-50);
         utils.setIntake(actuatorUtils.IntakeModes.OUT);
         sleep(2000);
 
         //back up from the baskets
+        utils.setArm(50);
         move.driveSeq(-36,36,130);
         sleep(1000);
         utils.setLift(actuatorUtils.LiftLevel.ZERO);
@@ -126,13 +130,9 @@ public class LeftPath extends LinearOpMode {
     }
 
 
-
-
     public double getHeading() {
         double angle = drive.getRawExternalHeading();
         return angle;
     }
 
 }
-
-

@@ -81,6 +81,7 @@ public class RightPath extends LinearOpMode {
         utils.setIntake(actuatorUtils.IntakeModes.OFF);
         //utils.setArm(actuatorUtils.ArmModes.UP);
         sleep(1000);
+        move.driveSeq(-54,-60,-180);
         Pose2d pose = drive.getPoseEstimate();
         fUtils.setPose(pose);
         fUtils.writeConfig(hardwareMap.appContext, this);
