@@ -96,7 +96,7 @@ public class LeftPath extends LinearOpMode {
         sleep(1000);
         utils.setLift(actuatorUtils.LiftLevel.HIGH_BASKET);
         sleep(4000);
-        move.driveSeq(-49,55,130);
+        move.driveSeq(-51,53,130);
         sleep(1000);
         utils.setArm(-50);
         utils.setIntake(actuatorUtils.IntakeModes.OUT);
@@ -115,12 +115,15 @@ public class LeftPath extends LinearOpMode {
         //drive to chamber
         move.driveSeq(-12,36,-90);
         utils.setArm(actuatorUtils.ArmModes.REST);
-        utils.setLift(actuatorUtils.LiftLevel.PARK);
+        utils.setLift(actuatorUtils.LiftLevel.LOW_BASKET);
         sleep(1000);
-        move.driveSeq(-12,23,-90);
+        move.driveSeq(-12,22,-90);
+        sleep(1000);
+        utils.setArm(-200);
 
 
-       // utils.setArm(actuatorUtils.ArmModes.REST);
+
+        // utils.setArm(actuatorUtils.ArmModes.REST);
         sleep(1000);
         Pose2d pose = drive.getPoseEstimate();
         fUtils.setPose(pose);
