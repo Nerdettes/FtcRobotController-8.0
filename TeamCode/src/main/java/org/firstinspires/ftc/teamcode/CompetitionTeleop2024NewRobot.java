@@ -64,6 +64,8 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
     boolean rightBumperPressed = false;
     boolean leftBumperPressed = false;
     boolean game1Bpressed = false;
+    boolean game2Bpressed = false;
+
     Double initHeading = 0.0;
 
     //boolean touchIsPressed = false;
@@ -118,7 +120,7 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         lift.setDirection(DcMotor.Direction.REVERSE);
         lift.setPower(0);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setDirection(DcMotor.Direction.REVERSE);
+        arm.setDirection(DcMotor.Direction.FORWARD);
         arm.setPower(0);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -222,8 +224,6 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         else if (gamepad2.b) {
             lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             lift.setPower(0.0);
-            arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            arm.setPower(0.0);
 
         }
 
@@ -246,8 +246,17 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
             initHeading = 0.0;
             imu.resetYaw();
         }
-        //Allows the drivers to use a single button to open and close gripper
-        arm.setPower(gamepad2.right_stick_y * armPower);
+        if (gamepad2.b & !game2Bpressed) {
+            game2Bpressed = true;
+            arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            arm.setPower(0.0);
+        } else if (!gamepad2.b & game2Bpressed) {
+            game2Bpressed = false;
+            arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        } else {
+            //Allows the drivers to use a single button to open and close gripper
+            arm.setPower(-gamepad2.right_stick_y * armPower);
+        }
 
 
 

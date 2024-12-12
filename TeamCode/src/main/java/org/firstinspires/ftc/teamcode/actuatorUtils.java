@@ -23,7 +23,7 @@ public class actuatorUtils {
     private static int lowEncode = 1600; //Minimum so string on arm lift doesn't break and position 0
     private static int highEncode = maxEncode; //Minimum so string on arm lift doesn't break and position 0
     private static double liftPower = .7f; //Set power to .7 so arm does not go up too fast
-    private static int parkEncode = 850;
+    private static int parkEncode = 1000;
     enum LiftLevel
     {
         ZERO,
@@ -104,8 +104,14 @@ public class actuatorUtils {
             wrist.setPosition(0.333);
 
         } else {
-            wrist.setPosition(0.667);
+            wrist.setPosition(0.0);
         }
+    }
+    public static void setLift(int delta) {
+        int getPosition = lift.getCurrentPosition();
+        lift.setTargetPosition(getPosition + delta);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(liftPower);
     }
     public static void setLift(LiftLevel mode) {
         if (mode == LiftLevel.ZERO) {
