@@ -123,10 +123,6 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         arm.setDirection(DcMotor.Direction.FORWARD);
         arm.setPower(0);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
-
-
     }
 
     /*
@@ -208,9 +204,11 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         else if (gamepad2.right_trigger >= .1)
         {
             autoLift = false;
-            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lift.setPower(gamepad2.right_trigger * (0.5));
-
+            // Hard Stop
+            if (lift.getCurrentPosition() < 3800) {
+                lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                lift.setPower(gamepad2.right_trigger * (0.5));
+            }
         }
         else if (gamepad2.y) {
             autoLift = true;
@@ -274,6 +272,10 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
             wrist.setPosition(0.0);
         } else if (!gamepad2.left_bumper) {
             leftBumperPressed = false;
+        }
+
+        if (gamepad2.a) {
+            wrist.setPosition(1.0);
         }
         // Show the elapsed game time and wheel power.
         telemetry.addData("arm: ",arm.getCurrentPosition());
