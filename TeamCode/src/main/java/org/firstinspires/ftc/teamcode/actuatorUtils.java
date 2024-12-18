@@ -18,12 +18,12 @@ public class actuatorUtils {
     private static int restEncode = 1180; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
     public static int downEncode = 0; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
     private static double armPower = 1.0; //Set power to .7 so arm does not go up too fast
-    private static int maxEncode = 3300; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
+    private static int maxEncode = 3400; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
     private static int minEncode = 0; //Minimum so string on arm lift doesn't break and position 0
     private static int lowEncode = 1600; //Minimum so string on arm lift doesn't break and position 0
     private static int highEncode = maxEncode; //Minimum so string on arm lift doesn't break and position 0
     private static double liftPower = .7f; //Set power to .7 so arm does not go up too fast
-    private static int parkEncode = 850;
+    private static int parkEncode = 1000;
     enum LiftLevel
     {
         ZERO,
@@ -42,7 +42,8 @@ public class actuatorUtils {
     enum WristModes
     {
         UP,
-        DOWN
+        DOWN,
+        BACK
 
     }
     enum ArmModes
@@ -71,6 +72,12 @@ public class actuatorUtils {
             intake.setPower(0.0);
         }
     }
+    public static void setArm(int delta) {
+        int getPosition = arm.getCurrentPosition();
+        arm.setTargetPosition(getPosition + delta);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        arm.setPower(armPower);
+    }
     public static void setArm(ArmModes mode)   {
         if (mode == ArmModes.UP) {
             arm.setTargetPosition(upEncode); //Lifts arm up so we can move w/o drag
@@ -96,10 +103,17 @@ public class actuatorUtils {
     public static void setWrist(WristModes mode)  {
         if (mode == WristModes.DOWN) {
             wrist.setPosition(0.333);
-
+        } else if (mode == WristModes.BACK) {
+            wrist.setPosition(1.000);
         } else {
-            wrist.setPosition(0.667);
+            wrist.setPosition(0.0);
         }
+    }
+    public static void setLift(int delta) {
+        int getPosition = lift.getCurrentPosition();
+        lift.setTargetPosition(getPosition + delta);
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setPower(liftPower);
     }
     public static void setLift(LiftLevel mode) {
         if (mode == LiftLevel.ZERO) {

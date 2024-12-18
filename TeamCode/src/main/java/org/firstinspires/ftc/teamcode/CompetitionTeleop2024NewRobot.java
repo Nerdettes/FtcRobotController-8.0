@@ -42,8 +42,8 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
     //private Servo gripper = null; //Located on Expansion Hub- Servo port 0
     //private Servo plane = null; //Located on Expansion Hub- Servo port 0
 
-    //private IMU imu = null;
-    //private fileUtils fUtils;
+    private IMU imu = null;
+    private fileUtils fUtils;
 
     //variable for Rev Touch Sensor
     //private TouchSensor touch;
@@ -54,7 +54,7 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
     private int pos1 = 1850; //Position 1
     private int pos2 = 3000; //Position 2
     private int desiredpos = 0; //Used as base for increasing arm position
-    private double armPower = .7f;
+    private double armPower = 1.0f;
     private actuatorUtils utils;
 
 
@@ -63,6 +63,9 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
     boolean game2back = false; //Used to override switch for arm in case of failure
     boolean rightBumperPressed = false;
     boolean leftBumperPressed = false;
+    boolean game1Bpressed = false;
+    boolean game2Bpressed = false;
+
     Double initHeading = 0.0;
 
     //boolean touchIsPressed = false;
@@ -89,19 +92,19 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         utils.initializeActuator(lift, arm, intake, wrist);
 
         intake.setPower(0.0);
-        //imu = hardwareMap.get(IMU.class, "imu");
-        //IMU.Parameters parameters = new IMU.Parameters(
-        //        new RevHubOrientationOnRobot(
-        //                RevHubOrientationOnRobot.LogoFacingDirection.DOWN,
-        //                RevHubOrientationOnRobot.UsbFacingDirection.LEFT)
-        //);
+        imu = hardwareMap.get(IMU.class, "imu");
+        IMU.Parameters parameters = new IMU.Parameters(
+                new RevHubOrientationOnRobot(
+                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                        RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD)
+        );
 
-        //imu.initialize(parameters);
+        imu.initialize(parameters);
 
-        //fUtils = new fileUtils();
-        //fUtils.readConfig(hardwareMap.appContext, this);
-        //Pose2d pose = fUtils.getPose();
-        //initHeading = pose.getHeading();
+        fUtils = new fileUtils();
+        fUtils.readConfig(hardwareMap.appContext, this);
+        Pose2d pose = fUtils.getPose();
+        initHeading = pose.getHeading();
 
 
         //gripper sensor for pulling arm down
@@ -117,13 +120,9 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         lift.setDirection(DcMotor.Direction.REVERSE);
         lift.setPower(0);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        arm.setDirection(DcMotor.Direction.REVERSE);
+        arm.setDirection(DcMotor.Direction.FORWARD);
         arm.setPower(0);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
-
-
     }
 
     /*
@@ -150,11 +149,11 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         //Code for mecanum wheels
 
         double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y) * PowerFactor;
-        //Orientation angles = imu.getRobotOrientation(AxesReference.INTRINSIC,
-        //        AxesOrder.ZYX,
-        //        RADIANS);
-//        double heading = (disableIMU) ? 0.0 : angles.firstAngle + Math.PI/2 + initHeading;
-        double heading =  initHeading;
+        Orientation angles = imu.getRobotOrientation(AxesReference.INTRINSIC,
+                AxesOrder.ZYX,
+                RADIANS);
+        double heading = (disableIMU) ? 0.0 : angles.firstAngle;
+        //double heading =  initHeading;
         double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4 + heading;
         double rightX = Math.pow(gamepad1.right_stick_x, 1.0)*(1-gamepad1.right_trigger);
         LBPower = r * Math.cos(robotAngle) - rightX;
@@ -179,7 +178,8 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         telemetry.addData("Right Back Motor","Speed: "+ RBPower);
         //telemetry.addData("Intake Motor", "Speed: = "+ intakePower);
         telemetry.addData("Arm Encoder Height","Height: "+arm.getCurrentPosition());
-        //telemetry.addData("Initial Heading", "Heading: "+initHeading);
+        telemetry.addData("IMU Disable", disableIMU);
+        telemetry.addData("Initial Heading", "Heading: "+initHeading);
 
         //Code for gamepad2
         //Toggle auto and manual mode
@@ -204,32 +204,24 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         else if (gamepad2.right_trigger >= .1)
         {
             autoLift = false;
-            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lift.setPower(gamepad2.right_trigger * (0.5));
-
+            // Hard Stop
+            if (lift.getCurrentPosition() < 3800) {
+                lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                lift.setPower(gamepad2.right_trigger * (0.5));
+            }
         }
         else if (gamepad2.y) {
             autoLift = true;
-            utils.setLift(actuatorUtils.LiftLevel.HIGH_BASKET);
-            utils.setArm(actuatorUtils.ArmModes.REST);
+            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lift.setPower(-0.5);
         }
         else if (gamepad2.x) {
-            autoLift = true;
-            utils.setLift(actuatorUtils.LiftLevel.LOW_BASKET);
-            utils.setArm(actuatorUtils.ArmModes.REST);
-
-        }
-        else if (gamepad2.a) {
-            autoLift = true;
-            utils.setLift(actuatorUtils.LiftLevel.ZERO);
-            utils.setArm(actuatorUtils.ArmModes.UP);
+            autoLift = false;
 
         }
         else if (gamepad2.b) {
             lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             lift.setPower(0.0);
-            arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            arm.setPower(0.0);
 
         }
 
@@ -241,17 +233,35 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         }
 
         //Code to increase height position
+        if (gamepad1.b & !game1Bpressed) {
+            game1Bpressed = true;
+            disableIMU = !disableIMU;
+        } else if (!gamepad1.b) {
+            game1Bpressed = false;
+        }
 
-        //Allows the drivers to use a single button to open and close gripper
-        arm.setPower(gamepad2.right_stick_y * armPower);
+        if (gamepad1.a) {
+            initHeading = 0.0;
+            imu.resetYaw();
+        }
+        if (gamepad2.b & !game2Bpressed) {
+            game2Bpressed = true;
+            arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            arm.setPower(0.0);
+        } else if (!gamepad2.b & game2Bpressed) {
+            game2Bpressed = false;
+            arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        } else {
+            //Allows the drivers to use a single button to open and close gripper
+            arm.setPower(-gamepad2.right_stick_y * armPower);
+        }
 
 
 
         intake.setPower(gamepad2.left_stick_y);
         if (gamepad2.right_bumper && ! rightBumperPressed) {
             rightBumperPressed = true;
-            if (wrist.getPosition()<1.0)
-                wrist.setPosition(wrist.getPosition()+0.333);
+            wrist.setPosition(0.333);
         }
         else if (!gamepad2.right_bumper) {
             rightBumperPressed = false;
@@ -259,10 +269,13 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
 
         if (gamepad2.left_bumper && !leftBumperPressed) {
             leftBumperPressed = true;
-            if (wrist.getPosition() > 0.0)
-                wrist.setPosition(wrist.getPosition() - 0.333);
+            wrist.setPosition(0.0);
         } else if (!gamepad2.left_bumper) {
             leftBumperPressed = false;
+        }
+
+        if (gamepad2.a) {
+            wrist.setPosition(1.0);
         }
         // Show the elapsed game time and wheel power.
         telemetry.addData("arm: ",arm.getCurrentPosition());

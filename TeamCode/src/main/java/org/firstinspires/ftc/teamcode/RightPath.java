@@ -62,7 +62,7 @@ public class RightPath extends LinearOpMode {
 
         //utils.setArm(actuatorUtils.ArmModes.UP);
         utils.setIntake(actuatorUtils.IntakeModes.OFF);
-        utils.setWrist(actuatorUtils.WristModes.UP);
+        utils.setWrist(actuatorUtils.WristModes.DOWN);
 
         Long startTime = System.currentTimeMillis();
         Long currTime = startTime;
@@ -73,15 +73,30 @@ public class RightPath extends LinearOpMode {
         startTime = currTime;
         //sleep(5000);
 
-        move.driveSeq(startPose.getX()+12,startPose.getY(),0);
-        move.driveSeq(-54,-54,-135);
-        //utils.setArm(actuatorUtils.ArmModes.DOWN);
+        move.driveSeq(startPose.getX()+19,startPose.getY()+10.5,0);
+        utils.setArm(1200);
+        utils.setLift(2400);
+        utils.setWrist(actuatorUtils.WristModes.UP);
+        sleep(2000);
+        move.driveSeq(-40,-4.5,0);
+        sleep(500);
+        utils.setLift(-650);
+        sleep(500);
+        utils.setArm(-200);
+        sleep(500);
         utils.setIntake(actuatorUtils.IntakeModes.OUT);
         sleep(2000);
         utils.setIntake(actuatorUtils.IntakeModes.OFF);
-        //utils.setArm(actuatorUtils.ArmModes.UP);
+        move.driveSeq(-46,-4.5,0);
         sleep(1000);
+        //utils.setArm(actuatorUtils.ArmModes.UP);
+        utils.setArm(actuatorUtils.ArmModes.DOWN);
+        utils.setLift(actuatorUtils.LiftLevel.ZERO);
+        utils.setWrist(actuatorUtils.WristModes.DOWN);
+        sleep(2000);
+        utils.setArm(33);
         move.driveSeq(-54,-60,-180);
+        sleep(1000);
         Pose2d pose = drive.getPoseEstimate();
         fUtils.setPose(pose);
         fUtils.writeConfig(hardwareMap.appContext, this);

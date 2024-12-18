@@ -26,7 +26,8 @@ public class DriveRobot extends OpMode {
     private DcMotor rightArm = null; //Located on Expansion Hub- Motor port 2
     private Servo wrist = null; //Located on Expansion Hub- Servo port 0
     // positive Y on right joystick will be intake, negative = outtake
-    private CRServo intake = null; //Located on Expansion Hub- Servo port 2
+    private CRServo intakeLeft = null; //Located on Expansion Hub- Servo port 2
+    private CRServo intakeRight = null; //Located on Expansion Hub- Servo port 2
 
 
     //private Servo elbow = null; //Located on Expansion Hub- Servo port 0
@@ -71,7 +72,9 @@ public class DriveRobot extends OpMode {
         RF = hardwareMap.get(DcMotor.class, "RF");
         LB = hardwareMap.get(DcMotor.class, "LB");
         RB = hardwareMap.get(DcMotor.class, "RB");
-       /* intake = hardwareMap.get(CRServo.class, "intake");
+        intakeLeft  = hardwareMap.get(CRServo.class, "intakeLeft");
+        intakeRight = hardwareMap.get(CRServo.class, "intakeRight");
+        /*
         leftArm = hardwareMap.get(DcMotor.class, "leftArm");
         rightArm = hardwareMap.get(DcMotor.class, "rightArm");
         lift = hardwareMap.get(DcMotor.class, "lift");
@@ -81,6 +84,8 @@ public class DriveRobot extends OpMode {
 
         intake.setPower(0.0);
         */
+        intakeLeft.setPower(0.0);
+        intakeRight.setPower(0.0);
 
         //imu = hardwareMap.get(IMU.class, "imu");
         //IMU.Parameters parameters = new IMU.Parameters(
@@ -185,7 +190,7 @@ public class DriveRobot extends OpMode {
 
 
         //Moves the arm up
-      /*  if (gamepad2.left_trigger >= .1)
+        /*  if (gamepad2.left_trigger >= .1)
         {
             autoLift = false;
             lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -240,8 +245,10 @@ public class DriveRobot extends OpMode {
         leftArm.setPower(gamepad2.right_stick_y * armPower);
         rightArm.setPower(gamepad2.right_stick_y * armPower);
 
-
-        intake.setPower(gamepad2.left_stick_y);
+        */
+        intakeLeft.setPower(gamepad2.left_stick_y);
+        intakeRight.setPower(-gamepad2.left_stick_y);
+        /*
         if (gamepad2.right_bumper && ! rightBumperPressed) {
             rightBumperPressed = true;
             if (wrist.getPosition()==0.0)
@@ -252,16 +259,16 @@ public class DriveRobot extends OpMode {
         else if (!gamepad2.right_bumper) {
             rightBumperPressed = false;
         }
-
+        */
         // Show the elapsed game time and wheel power.
-        telemetry.addData("leftArm: ", leftArm.getCurrentPosition());
-        telemetry.addData("rightArm:", rightArm.getCurrentPosition());
-        telemetry.addData("intake:", intake.getPower());
-        telemetry.addData("wrist:", wrist.getPosition());
-        telemetry.addData("Status","Run Time: "+runtime.toString());
+        //telemetry.addData("leftArm: ", leftArm.getCurrentPosition());
+        //telemetry.addData("rightArm:", rightArm.getCurrentPosition());
+        telemetry.addData("intakeLeft:", intakeLeft.getPower());
+        telemetry.addData("intakeRight:", intakeRight.getPower());
+        //telemetry.addData("wrist:", wrist.getPosition());
+        //telemetry.addData("Status","Run Time: "+runtime.toString());
         //telemetry.addData("touchIsPressed ", touchIsPressed);
 
-       */
         telemetry.update();
         //telemetry.addData("positionTarget: ", "%.2f", positionTarget);
 
