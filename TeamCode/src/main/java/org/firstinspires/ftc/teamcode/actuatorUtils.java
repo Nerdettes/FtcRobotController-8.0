@@ -42,7 +42,8 @@ public class actuatorUtils {
     enum WristModes
     {
         UP,
-        DOWN
+        DOWN,
+        BACK
 
     }
     enum ArmModes
@@ -102,7 +103,8 @@ public class actuatorUtils {
     public static void setWrist(WristModes mode)  {
         if (mode == WristModes.DOWN) {
             wrist.setPosition(0.333);
-
+        } else if (mode == WristModes.BACK) {
+            wrist.setPosition(1.000);
         } else {
             wrist.setPosition(0.0);
         }
