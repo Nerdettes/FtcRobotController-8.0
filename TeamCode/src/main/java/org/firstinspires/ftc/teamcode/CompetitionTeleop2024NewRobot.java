@@ -205,9 +205,11 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         {
             autoLift = false;
             // Hard Stop
-            if (lift.getCurrentPosition() < 3800) {
+            if (lift.getCurrentPosition() < 3380) {
                 lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 lift.setPower(gamepad2.right_trigger * (0.5));
+            } else {
+                lift.setPower(0);
             }
         }
         else if (gamepad2.y) {
