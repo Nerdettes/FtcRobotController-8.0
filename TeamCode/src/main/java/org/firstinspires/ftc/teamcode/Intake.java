@@ -53,4 +53,17 @@ public class Intake {
         return new IntakeOff();
     }
 
+    public class IntakeRun implements Action {
+        private double pow;
+        public IntakeRun(double pow) { this.pow = pow;}
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            intakeLeft.setPower(pow);
+            intakeRight.setPower(-pow);
+            return false;
+        }
+    }
+    public Action intakeRun(double pow) {
+        return new IntakeRun(pow);
+    }
 }

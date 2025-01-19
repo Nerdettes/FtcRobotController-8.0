@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
+import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -17,10 +19,9 @@ public class DriveRobot extends OpMode {
     //Declare the wheels
     //test
     private PinpointDrive drive;
-    // Left trigger is upward and Right is Downward.
-    // positive Y on right joystick will be intake, negative = outtake
-    private CRServo intakeLeft = null; //Located on Expansion Hub- Servo port 2
-    private CRServo intakeRight = null; //Located on Expansion Hub- Servo port 2
+    private Intake intake;
+    private IntakeSlide intakeSlide;
+    private Wrist wrist;
 
 
     //private Servo elbow = null; //Located on Expansion Hub- Servo port 0
@@ -45,15 +46,9 @@ public class DriveRobot extends OpMode {
         telemetry.addData("Status", "Initialized");
         Pose2d startPose = new Pose2d(0, 0,0);
         drive = new PinpointDrive(hardwareMap, startPose);
-        // Initiali ze the hardware variables. Note that the strings used here as parameters
-        // to 'get' must correspond to the names assigned during the robot configuration
-        // step (using the FTC Robot Controller app on the phone).
-        intakeLeft  = hardwareMap.get(CRServo.class, "intakeLeft");
-        intakeRight = hardwareMap.get(CRServo.class, "intakeRight");
-
-        intakeLeft.setPower(0.0);
-        intakeRight.setPower(0.0);
-
+        intake = new Intake(hardwareMap);
+        intakeSlide = new IntakeSlide(hardwareMap);
+        wrist = new Wrist(hardwareMap);
     }
 
     /*
@@ -80,10 +75,15 @@ public class DriveRobot extends OpMode {
 
         drive.updatePoseEstimate();
 
-        intakeLeft.setPower(gamepad2.left_stick_y);
-        intakeRight.setPower(-gamepad2.left_stick_y);
-        telemetry.addData("intakeLeft:", intakeLeft.getPower());
-        telemetry.addData("intakeRight:", intakeRight.getPower());
+        Actions.runBlocking(new SequentialAction(intake.intakeRun(gamepad2.left_stick_y)));
+
+        Actions.runBlocking(new SequentialAction(intakeSlide.intakeRun(gamepad2.right_stick_y)));
+
+        if (gamepad2.a) {
+            Actions.runBlocking(new SequentialAction(wrist.wristDown()));
+        } else if (gamepad2.b) {
+            Actions.runBlocking(new SequentialAction(wrist.wristUp()));
+        }
         telemetry.addData("Status","Run Time: "+runtime.toString());
 
         telemetry.update();

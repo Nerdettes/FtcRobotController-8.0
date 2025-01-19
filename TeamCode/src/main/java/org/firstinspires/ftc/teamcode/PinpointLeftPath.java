@@ -92,6 +92,11 @@ public class PinpointLeftPath extends LinearOpMode {
                     new SleepAction(1),
                     intake.intakeOut(),
                     new SleepAction(1),
+                    intake.intakeOff(),
+                    intake.intakeRun(0.5),
+                    new SleepAction(1),
+                    intake.intakeRun(-0.5),
+                    new SleepAction(1),
                     intake.intakeOff()),
                 new SequentialAction(
                     intake.intakeOut(),
