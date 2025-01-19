@@ -1,29 +1,23 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-
-
-import java.util.Locale;
 
 @Autonomous(name = "LeftPath", group = "")
 public class LeftPath extends LinearOpMode {
     private static final int NUMLOOPS = 3 ;
     //test1
 
-    private SampleMecanumDrive drive;
+    private PinpointDrive drive;
     private actuatorUtils utils;
-    private moveUtils move;
+    private PinPointMoveUtils move;
 
     private DcMotor arm = null; //Located on Expansion Hub- Servo port 0
 
@@ -45,14 +39,14 @@ public class LeftPath extends LinearOpMode {
     private fileUtils fUtils;
     @Override
     public void runOpMode() throws InterruptedException {
-        drive = new SampleMecanumDrive(hardwareMap);
+        Pose2d startPose = new Pose2d(-63, 15,0);
+        drive = new PinpointDrive(hardwareMap, startPose);
         utils = new actuatorUtils();
         lift = hardwareMap.get(DcMotor.class, "lift");
         arm = hardwareMap.get(DcMotor.class, "arm");
         intake = hardwareMap.get(CRServo.class, "intake");
         wrist = hardwareMap.get(Servo.class,"wrist");
-        Pose2d startPose = new Pose2d(-63, 15,0);
-        drive.setPoseEstimate(startPose);
+        //drive.setPoseEstimate(startPose);
         //TrajectorySequence aSeq = autoSeq(startPose);
 
 
@@ -65,7 +59,7 @@ public class LeftPath extends LinearOpMode {
         desiredHeading = getHeading();
 
         utils.initializeActuator(lift, arm, intake, wrist);
-        move.initialize(drive, utils);
+        move.initialize(drive, utils, startPose);
 
        // utils.setArm(actuatorUtils.ArmModes.UP);
         utils.setIntake(actuatorUtils.IntakeModes.OFF);
@@ -81,7 +75,7 @@ public class LeftPath extends LinearOpMode {
         //sleep(5000)
 
 
-        move.driveSeq(startPose.getX()+12,startPose.getY(),0);
+        move.driveSeq(startPose.position.x+12,startPose.position.y,0);
         move.driveSeq(-47,53,130);
        // utils.setLift(actuatorUtils.LiftLevel.HIGH_BASKET);
        // sleep(3000);
@@ -125,16 +119,16 @@ public class LeftPath extends LinearOpMode {
 
         // utils.setArm(actuatorUtils.ArmModes.REST);
         sleep(1000);
-        Pose2d pose = drive.getPoseEstimate();
-        fUtils.setPose(pose);
-        fUtils.writeConfig(hardwareMap.appContext, this);
-        telemetry.addData("Final Heading: ", "Heading: "+ pose.getHeading());
-        telemetry.update();
+        //Pose2d pose = drive.getPoseEstimate();
+        //fUtils.setPose(pose);
+        //fUtils.writeConfig(hardwareMap.appContext, this);
+        //telemetry.addData("Final Heading: ", "Heading: "+ pose.getHeading());
+        //telemetry.update();
     }
 
 
     public double getHeading() {
-        double angle = drive.getRawExternalHeading();
+        double angle = drive.pinpoint.getHeading();
         return angle;
     }
 

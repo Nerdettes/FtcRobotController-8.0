@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static java.lang.Thread.sleep;
-
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -15,16 +13,16 @@ public class actuatorUtils {
     private static Servo wrist = null;
     //test
     public static int upEncode = 1650; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
-    private static int restEncode = 1180; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
+    public static int restEncode = 1180; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
     public static int downEncode = 0; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
-    private static double armPower = 1.0; //Set power to .7 so arm does not go up too fast
-    private static int maxEncode = 3400; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
-    private static int minEncode = 0; //Minimum so string on arm lift doesn't break and position 0
-    private static int lowEncode = 1600; //Minimum so string on arm lift doesn't break and position 0
-    private static int highEncode = maxEncode; //Minimum so string on arm lift doesn't break and position 0
-    private static double liftPower = .7f; //Set power to .7 so arm does not go up too fast
-    private static int parkEncode = 1000;
-    enum LiftLevel
+    public static double armPower = 1.0; //Set power to .7 so arm does not go up too fast
+    public static int maxEncode = 3400; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
+    public static int minEncode = 0; //Minimum so string on arm lift doesn't break and position 0
+    public static int lowEncode = 1600; //Minimum so string on arm lift doesn't break and position 0
+    public static int highEncode = maxEncode; //Minimum so string on arm lift doesn't break and position 0
+    public static double liftPower = .7f; //Set power to .7 so arm does not go up too fast
+    public static int parkEncode = 1000;
+   public enum LiftLevel
     {
         ZERO,
         PARK,
@@ -32,21 +30,21 @@ public class actuatorUtils {
         HIGH_BASKET
 
     }
-    enum IntakeModes
+    public enum IntakeModes
     {
         OFF,
         IN,
         OUT
 
     }
-    enum WristModes
+    public enum WristModes
     {
         UP,
         DOWN,
         BACK
 
     }
-    enum ArmModes
+    public enum ArmModes
     {
         UP,
         DOWN,

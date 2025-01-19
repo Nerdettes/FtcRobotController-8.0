@@ -1,31 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.RADIANS;
-
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @TeleOp(name="Demo Robot", group="Iterative Opmode")
 public class DemoRobot extends OpMode {
     // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
     //Declare the wheels
     //test
     private DcMotor LB = null; //Located on Control Hub- Motor port 0
     private DcMotor RB = null; //Located on Control Hub- Motor port 1
     private DcMotor ARM = null; // located on Control Hub- Motor port 2
-    private double PowerFactor = 0.8f; //Max power available for wheels
 
     /*
       Code to run ONCE when the driver hits INIT
@@ -67,7 +53,7 @@ public class DemoRobot extends OpMode {
 
         //Code for gamepad1
         //Code for throttling the power factor
-        PowerFactor = .8f;
+        double PowerFactor = 0.8f; //Max power available for wheels
 
         //Code for mecanum wheels
         double leftY = gamepad1.left_stick_y * PowerFactor;
