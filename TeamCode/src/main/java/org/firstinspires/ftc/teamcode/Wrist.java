@@ -11,6 +11,8 @@ public class Wrist {
     private final Servo leftWrist; //Located on Control Hub- Servo port 2
     private final Servo rightWrist; //Located on Control Hub- Servo port 4
 
+    private final double downPosition = (190.0/270.0);
+    private final double upPosition   = (80.0/270.0);
     public Wrist(HardwareMap hardwareMap) {
         leftWrist  = hardwareMap.get(Servo.class, "leftWrist");
         rightWrist = hardwareMap.get(Servo.class, "rightWrist");
@@ -21,8 +23,8 @@ public class Wrist {
     public class WristDown implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            leftWrist.setPosition(2.0/3.0 + 1.0/27.0);
-            rightWrist.setPosition(1.0 - (2.0/3.0 + 1.0/27.0));
+            leftWrist.setPosition(downPosition);
+            rightWrist.setPosition(1.0 - downPosition);
             return false;
         }
     }
@@ -33,8 +35,8 @@ public class Wrist {
     public class WristUp implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            leftWrist.setPosition(1.0/3.0 - 1.0/27.0);
-            rightWrist.setPosition(1.0 - (1.0/3.0 - 1.0/27.0));
+            leftWrist.setPosition(upPosition);
+            rightWrist.setPosition(1.0 - upPosition);
             return false;
         }
     }

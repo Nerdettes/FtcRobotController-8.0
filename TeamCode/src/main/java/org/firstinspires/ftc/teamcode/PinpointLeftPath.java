@@ -22,20 +22,10 @@ public class PinpointLeftPath extends LinearOpMode {
     //test1
 
     private PinpointDrive drive;
-    //private actuatorUtils utils;
-    //private PinPointMoveUtils move;
 
-    private DcMotor arm = null; //Located on Expansion Hub- Servo port 0
-
-    private DcMotor lift = null;
-    private Servo wrist = null; //Located on Expansion Hub- Servo port 0
-
-
-    static final float MAX_SPEED = 1.0f;
-    static final float MIN_SPEED = 0.4f;
-    static final int ACCEL = 75;  // Scaling factor used in accel / decel code.  Was 100!
-    public double desiredHeading;
     public Intake intake;
+    public IntakeSlide intakeSlide;
+    public Wrist wrist;
     public SleepAction sleep1Sec;
 
     Orientation angles;
@@ -50,6 +40,8 @@ public class PinpointLeftPath extends LinearOpMode {
         drive = new PinpointDrive(hardwareMap, startPose);
         //utils = new actuatorUtils();
         intake = new Intake(hardwareMap);
+        intakeSlide = new IntakeSlide(hardwareMap);
+        wrist = new Wrist(hardwareMap);
         sleep1Sec = new SleepAction(1);
         //lift = hardwareMap.get(DcMotor.class, "lift");
         //arm = hardwareMap.get(DcMotor.class, "arm");
@@ -82,29 +74,21 @@ public class PinpointLeftPath extends LinearOpMode {
         currTime = System.currentTimeMillis();
         startTime = currTime;
         //sleep(5000)
-        Actions.runBlocking(new ParallelAction(
-                new SequentialAction(
+        Actions.runBlocking(new SequentialAction(
                     drive.actionBuilder(startPose)
                         .setTangent(Math.toRadians(0))
-                        .splineTo(new Vector2d(-47, 53), Math.toRadians(130))
+                        .splineTo(new Vector2d(-35, 49), Math.toRadians(0))
                         .build(),
-                    intake.intakeIn(),
+                    wrist.wristDown(),
                     new SleepAction(1),
-                    intake.intakeOut(),
+                    intake.intakeIn(),
                     new SleepAction(1),
                     intake.intakeOff(),
-                    intake.intakeRun(0.5),
-                    new SleepAction(1),
-                    intake.intakeRun(-0.5),
-                    new SleepAction(1),
-                    intake.intakeOff()),
-                new SequentialAction(
-                    intake.intakeOut(),
-                    new SleepAction(1),
-                    intake.intakeIn(),
-                    new SleepAction(1),
-                    intake.intakeOff())
-                )
+                    wrist.wristUp(),
+                    drive.actionBuilder(new Pose2d(-34, 49, Math.toRadians(0)))
+                        .setTangent(Math.toRadians(180))
+                        .splineTo(new Vector2d(-53, 53), Math.toRadians(180-45))
+                        .build())
         );
 
         //move.driveSeq(-47,53,130);
