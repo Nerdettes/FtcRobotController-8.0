@@ -12,7 +12,7 @@ public class Wrist {
     private final Servo rightWrist; //Located on Control Hub- Servo port 4
 
     private final double downPosition = (190.0/270.0);
-    private final double upPosition   = (80.0/270.0);
+    private final double upPosition   = (13.5/270.0);
     public Wrist(HardwareMap hardwareMap) {
         leftWrist  = hardwareMap.get(Servo.class, "leftWrist");
         rightWrist = hardwareMap.get(Servo.class, "rightWrist");

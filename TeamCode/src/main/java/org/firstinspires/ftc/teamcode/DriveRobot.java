@@ -22,6 +22,16 @@ public class DriveRobot extends OpMode {
     private Intake intake;
     private IntakeSlide intakeSlide;
     private Wrist wrist;
+    private GripperWrist gripperWrist;
+    private Gripper gripper;
+    private boolean aIsPressed = false;
+    private boolean wristIsUp = true;
+    private boolean bIsPressed = false;
+    private boolean gripperIsFront = true;
+    private boolean xIsPresssed = false;
+    private boolean gripperIsClosed = true;
+    private boolean yIsPresssed = false;
+    private boolean slideStart = true;
 
 
     //private Servo elbow = null; //Located on Expansion Hub- Servo port 0
@@ -49,6 +59,8 @@ public class DriveRobot extends OpMode {
         intake = new Intake(hardwareMap);
         intakeSlide = new IntakeSlide(hardwareMap);
         wrist = new Wrist(hardwareMap);
+        gripperWrist = new GripperWrist(hardwareMap);
+        gripper = new Gripper(hardwareMap);
     }
 
     /*
@@ -77,15 +89,52 @@ public class DriveRobot extends OpMode {
 
         Actions.runBlocking(new SequentialAction(intake.intakeRun(gamepad2.left_stick_y)));
 
-        Actions.runBlocking(new SequentialAction(intakeSlide.intakeRun(gamepad2.right_stick_y)));
+        Actions.runBlocking(new SequentialAction(intakeSlide.intakeRun(-gamepad2.right_stick_y)));
 
-        if (gamepad2.a) {
-            Actions.runBlocking(new SequentialAction(wrist.wristDown()));
-        } else if (gamepad2.b) {
-            Actions.runBlocking(new SequentialAction(wrist.wristUp()));
+        if (gamepad2.a && ! aIsPressed) {
+            aIsPressed = true;
+            if (wristIsUp)
+                Actions.runBlocking(new SequentialAction(wrist.wristDown()));
+            else
+                Actions.runBlocking(new SequentialAction(wrist.wristUp()));
+            wristIsUp = ! wristIsUp;
+        } else if (!gamepad2.a) {
+            aIsPressed = false;
+        }
+
+        if (gamepad2.b && ! bIsPressed) {
+            bIsPressed = true;
+            if (gripperIsFront)
+                Actions.runBlocking(new SequentialAction(gripperWrist.wristBack()));
+            else
+                Actions.runBlocking(new SequentialAction(gripperWrist.wristFront()));
+            gripperIsFront = ! gripperIsFront;
+        } else if (!gamepad2.b) {
+            bIsPressed = false;
+        }
+
+        if (gamepad2.x && ! xIsPresssed) {
+            xIsPresssed = true;
+            if (gripperIsClosed)
+                Actions.runBlocking(new SequentialAction(gripper.gripperOpen()));
+            else
+                Actions.runBlocking(new SequentialAction(gripper.gripperClosed()));
+            gripperIsClosed = ! gripperIsClosed;
+        } else if (!gamepad2.x) {
+            xIsPresssed = false;
+        }
+        if (gamepad2.y && ! yIsPresssed) {
+            yIsPresssed = true;
+            if (slideStart)
+                Actions.runBlocking(new SequentialAction(intakeSlide.setPosition(500)));
+            else
+                Actions.runBlocking(new SequentialAction(intakeSlide.setPosition(0)));
+            slideStart = ! slideStart;
+        } else if (!gamepad2.y) {
+            yIsPresssed = false;
         }
         telemetry.addData("Status","Run Time: "+runtime.toString());
-
+        telemetry.addData("Intake: ", intakeSlide.getPosition());
         telemetry.update();
 
     }
