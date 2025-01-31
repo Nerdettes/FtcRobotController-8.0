@@ -43,6 +43,7 @@ public class IntakeSlide {
             if (slide.isBusy()) {
                 return true;
             } else {
+                slide.setPower(0.0);
                 slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 return false;
             }

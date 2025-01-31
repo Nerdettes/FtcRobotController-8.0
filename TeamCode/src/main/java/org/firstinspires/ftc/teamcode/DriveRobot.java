@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -27,12 +28,15 @@ public class DriveRobot extends OpMode {
     private boolean aIsPressed = false;
     private boolean wristIsUp = true;
     private boolean bIsPressed = false;
-    private boolean gripperIsFront = true;
+    private GripperWrist.WristPosition gripperPos = GripperWrist.WristPosition.Front;
     private boolean xIsPresssed = false;
     private boolean gripperIsClosed = true;
     private boolean yIsPresssed = false;
     private boolean slideStart = true;
+    private boolean rightBumperIsPressed = false;
 
+
+     private SequentialAction handoff;
 
     //private Servo elbow = null; //Located on Expansion Hub- Servo port 0
     //private Servo gripper = null; //Located on Expansion Hub- Servo port 0
@@ -61,6 +65,21 @@ public class DriveRobot extends OpMode {
         wrist = new Wrist(hardwareMap);
         gripperWrist = new GripperWrist(hardwareMap);
         gripper = new Gripper(hardwareMap);
+        handoff = new SequentialAction(
+                gripperWrist.wristBack(),
+                gripper.gripperOpen(),
+                wrist.wristInit(),
+                intakeSlide.setPosition(600),
+                wrist.wristUp(),
+                new SleepAction(1),
+                gripperWrist.wristFront(),
+                new SleepAction(1),
+                intake.intakeOut(),
+                gripper.gripperClosed(),
+                new SleepAction(1),
+                intake.intakeOff(),
+                gripperWrist.wristBack()
+        );
     }
 
     /*
@@ -91,6 +110,13 @@ public class DriveRobot extends OpMode {
 
         Actions.runBlocking(new SequentialAction(intakeSlide.intakeRun(-gamepad2.right_stick_y)));
 
+        if (gamepad2.right_bumper && ! rightBumperIsPressed){
+            rightBumperIsPressed = true;
+            Actions.runBlocking(handoff);
+        } else if (!gamepad2.right_bumper){
+            rightBumperIsPressed= false;
+
+        }
         if (gamepad2.a && ! aIsPressed) {
             aIsPressed = true;
             if (wristIsUp)
@@ -104,11 +130,16 @@ public class DriveRobot extends OpMode {
 
         if (gamepad2.b && ! bIsPressed) {
             bIsPressed = true;
-            if (gripperIsFront)
+            if (gripperPos == GripperWrist.WristPosition.Front) {
                 Actions.runBlocking(new SequentialAction(gripperWrist.wristBack()));
-            else
+                gripperPos = GripperWrist.WristPosition.Back;
+            } else if (gripperPos == GripperWrist.WristPosition.Wall) {
                 Actions.runBlocking(new SequentialAction(gripperWrist.wristFront()));
-            gripperIsFront = ! gripperIsFront;
+                gripperPos = GripperWrist.WristPosition.Front;
+            } else {
+                Actions.runBlocking(new SequentialAction(gripperWrist.wristWall()));
+                gripperPos = GripperWrist.WristPosition.Wall;
+            }
         } else if (!gamepad2.b) {
             bIsPressed = false;
         }
