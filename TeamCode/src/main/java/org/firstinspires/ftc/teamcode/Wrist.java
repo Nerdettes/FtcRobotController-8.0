@@ -56,6 +56,35 @@ public class Wrist {
     public Action wristInit() {
         return new WristInit();
     }
+    public class RotateUp implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            double pos = leftWrist.getPosition();
+            if (pos > upPosition)
+                pos = pos - 0.01;
+            leftWrist.setPosition(pos);
+            rightWrist.setPosition(1.0 - pos);
+            return false;
+        }
+    }
+    public Action rotateUp() {
+        return new RotateUp();
+    }
+    public class RotateDown implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            double pos = leftWrist.getPosition();
+            if (pos < downPosition)
+                pos = pos + 0.01;
+            leftWrist.setPosition(pos);
+            rightWrist.setPosition(1.0 - pos);
+            return false;
+        }
+    }
+    public Action rotateDown() {
+        return new RotateDown();
+    }
+
 
 }
 

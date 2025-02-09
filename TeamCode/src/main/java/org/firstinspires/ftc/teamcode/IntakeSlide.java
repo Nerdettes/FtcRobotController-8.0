@@ -25,6 +25,7 @@ public class IntakeSlide {
         public IntakeRun(double pow) { this.pow = pow;}
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
+            slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             slide.setPower(pow);
             return false;
         }
@@ -44,12 +45,18 @@ public class IntakeSlide {
                 return true;
             } else {
                 slide.setPower(0.0);
-                slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 return false;
             }
         }
     }
     public Action setPosition(int pos) {
         return new SetPosition(pos);
+    }
+    public void reset() {
+        slide.setPower(0);
+        slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
 }
