@@ -13,7 +13,7 @@ public class Wrist {
 
     private final double downPosition = (190.0/270.0);
     private final double upPosition   = (13.5/270.0);
-    private final double initPosition = (90.0/270.0);
+    private final double initPosition = (100.0/270.0);
     public Wrist(HardwareMap hardwareMap) {
         leftWrist  = hardwareMap.get(Servo.class, "leftWrist");
         rightWrist = hardwareMap.get(Servo.class, "rightWrist");

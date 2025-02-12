@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode;
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.acmerobotics.roadrunner.SleepAction;
 
 
 public class KitchenSink {
+    public PinpointDrive drive;
     public Intake intake;
     public IntakeSlide intakeSlide;
     public Wrist wrist;
@@ -16,7 +18,8 @@ public class KitchenSink {
     public Gripper gripper;
     public Lift lift;
 
-    public KitchenSink(HardwareMap hardwareMap) {
+    public KitchenSink(HardwareMap hardwareMap, Pose2d startPose) {
+        drive = new PinpointDrive(hardwareMap, startPose);
         intake = new Intake(hardwareMap);
         intakeSlide = new IntakeSlide(hardwareMap);
         wrist = new Wrist(hardwareMap);

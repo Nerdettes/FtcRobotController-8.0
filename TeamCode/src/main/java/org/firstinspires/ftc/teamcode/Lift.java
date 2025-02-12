@@ -57,6 +57,24 @@ public class Lift {
     public Action setPosition(int pos, double pow) {
         return new SetPosition(pos, pow);
     }
+    public class SetPositionNoBlock implements Action {
+        private int pos;
+        private double pow;
+        public SetPositionNoBlock(int pos, double pow) {
+            this.pos = pos;
+            this.pow = pow;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            lift.setTargetPosition(pos); //Lowers arm to min pos.
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            lift.setPower(pow);
+            return false;
+        }
+    }
+    public Action setPositionNoBlock(int pos, double pow) {
+        return new SetPositionNoBlock(pos, pow);
+    }
     public void reset() {
         lift.setPower(0);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

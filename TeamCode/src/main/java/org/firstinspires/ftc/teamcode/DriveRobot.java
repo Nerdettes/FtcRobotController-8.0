@@ -19,17 +19,12 @@ public class DriveRobot extends OpMode {
     public ElapsedTime runtime = new ElapsedTime();
     //Declare the wheels
     //test
-    private PinpointDrive drive;
     private KitchenSink ks;
-    private boolean aIsPressed = false;
-    private boolean wristIsUp = true;
     private boolean bIsPressed = false;
     private boolean liftIsSet = false;
     private GripperWrist.WristPosition gripperPos = GripperWrist.WristPosition.Front;
     private boolean xIsPresssed = false;
     private boolean gripperIsClosed = true;
-    private boolean yIsPresssed = false;
-    private boolean slideStart = true;
     private boolean rightBumperIsPressed = false;
 
 
@@ -57,8 +52,7 @@ public class DriveRobot extends OpMode {
     public void init() {
         telemetry.addData("Status", "Initialized");
         Pose2d startPose = new Pose2d(0, 0,0);
-        drive = new PinpointDrive(hardwareMap, startPose);
-        ks = new KitchenSink(hardwareMap);
+        ks = new KitchenSink(hardwareMap, startPose);
 
     }
 
@@ -76,7 +70,7 @@ public class DriveRobot extends OpMode {
 
         //Code for mecanum wheels
 
-        drive.setDrivePowers(new PoseVelocity2d(
+        ks.drive.setDrivePowers(new PoseVelocity2d(
                 new Vector2d(
                         -gamepad1.left_stick_y,
                         -gamepad1.left_stick_x
@@ -84,7 +78,7 @@ public class DriveRobot extends OpMode {
                 -gamepad1.right_stick_x
         ));
 
-        drive.updatePoseEstimate();
+        ks.drive.updatePoseEstimate();
 
         Actions.runBlocking(new SequentialAction(ks.intake.intakeRun(gamepad2.left_stick_y)));
 
