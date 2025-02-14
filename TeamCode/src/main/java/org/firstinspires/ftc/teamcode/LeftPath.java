@@ -56,7 +56,8 @@ public class LeftPath extends LinearOpMode {
                 ks.gripperWrist.wristBack(),
                 ks.drive.actionBuilder(startPose)
                         //.setTangent(Math.toRadians(0.0))
-                        .splineToConstantHeading(new Vector2d(-41.5, 3.0), Math.toRadians(180.0))
+                        .strafeToLinearHeading(new Vector2d(-41.5, 3.0), Math.toRadians(180.0))
+                        //.splineToConstantHeading(new Vector2d(-41.5, 3.0), Math.toRadians(180.0))
                         //.splineTo(new Vector2d(-39, 3.0), Math.toRadians(180.0))
                         .build(),
                 new SleepAction(1),
@@ -64,26 +65,38 @@ public class LeftPath extends LinearOpMode {
                 new SleepAction(2),
                 ks.gripper.gripperOpen(),
                 ks.drive.actionBuilder(new Pose2d(-41.5, 3.0, Math.toRadians(180.0)))
-                        .lineToXLinearHeading(-50.0,Math.toRadians(90.0))
-                        .lineToYLinearHeading(49, Math.toRadians(0.0))
-                        .lineToX(-31)
-                       .build(),
+                        .strafeToLinearHeading(new Vector2d(-50, 48.75), Math.toRadians(0.0))
+                        .strafeToLinearHeading(new Vector2d(-31.75, 48.75), Math.toRadians(0.0))
+                        .build(),
                 new SleepAction(2),
                 ks.wrist.wristDown(),
                 new SleepAction(1),
                 ks.intake.intakeIn(),
                 new SleepAction(1),
                 ks.intake.intakeOff(),
-                ks.handoff()
+                ks.handoff(),
+                ks.lift.setPosition(2300,0.5),
+                ks.drive.actionBuilder(new Pose2d(-31.75, 48.75, Math.toRadians(0.0)))
+                        .strafeToLinearHeading(new Vector2d(-52.25, 52.25), Math.toRadians(-45.0))
+                        .build(),
+                new SleepAction(1),
+                ks.gripper.gripperOpen(),
+                new SleepAction(.5),
+                ks.drive.actionBuilder(new Pose2d(-52.25, 52.25, Math.toRadians(-45.0)))
+                        .strafeToLinearHeading(new Vector2d(-12.5, 48), Math.toRadians(90.0))
+                        .strafeToLinearHeading(new Vector2d(-12.5, 28), Math.toRadians(90.0))
+
+                        .build(),
+                new SleepAction(1),
+                ks.gripperWrist.wristWall()
                 )
         );
         // utils.setArm(actuatorUtils.ArmModes.REST);
-        sleep(1000);
+        telemetry.addData("IntakeSlide Position: ", ks.intakeSlide.getPosition());
+        telemetry.update();
         //Pose2d pose = drive.getPoseEstimate();
         //fUtils.setPose(pose);
         //fUtils.writeConfig(hardwareMap.appContext, this);
-        //telemetry.addData("Final Heading: ", "Heading: "+ pose.getHeading());
-        //telemetry.update();
     }
 
 

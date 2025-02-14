@@ -38,6 +38,7 @@ public class KitchenSink {
                 gripperWrist.wristFront(),
                 new SleepAction(1),
                 intake.intakeOut(),
+                new SleepAction(0.125),
                 gripper.gripperClosed(),
                 new SleepAction(1),
                 intake.intakeOff(),
