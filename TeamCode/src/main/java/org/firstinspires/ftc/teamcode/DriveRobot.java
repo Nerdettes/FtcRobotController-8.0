@@ -72,8 +72,8 @@ public class DriveRobot extends OpMode {
 
         ks.drive.setDrivePowers(new PoseVelocity2d(
                 new Vector2d(
-                        -gamepad1.left_stick_y,
-                        -gamepad1.left_stick_x
+                        -0.8*gamepad1.left_stick_y,
+                        -0.8*gamepad1.left_stick_x
                 ),
                 -gamepad1.right_stick_x
         ));
@@ -131,7 +131,7 @@ public class DriveRobot extends OpMode {
             liftIsSet = false;
         } else if (!liftIsSet){
             int pos = ks.lift.getPosition();
-            Actions.runBlocking(new SequentialAction(ks.lift.setPosition(pos, 0.1)));
+            Actions.runBlocking(new SequentialAction(ks.lift.setPosition(pos, 0.05)));
             liftIsSet = true;
         }
         if (gamepad2.left_bumper) {

@@ -53,6 +53,20 @@ public class IntakeSlide {
     public Action setPosition(int pos) {
         return new SetPosition(pos);
     }
+    public class SetPositionNoBlock implements Action {
+        private int pos;
+        public SetPositionNoBlock(int pos) { this.pos = pos;}
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            slide.setTargetPosition(pos); //Lowers arm to min pos.
+            slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            slide.setPower(0.5);
+            return false;
+        }
+    }
+    public Action setPositionNoBlock(int pos) {
+    return new SetPositionNoBlock(pos);
+}
     public void reset() {
         slide.setPower(0);
         slide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

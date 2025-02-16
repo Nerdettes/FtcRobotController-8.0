@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.RADI
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -15,6 +16,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+@Disabled
 
 @TeleOp(name="Competition Teleop2024NewRobot", group="Iterative Opmode")
 public class CompetitionTeleop2024NewRobot extends OpMode {
