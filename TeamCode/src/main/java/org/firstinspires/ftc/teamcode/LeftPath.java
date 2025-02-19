@@ -53,23 +53,19 @@ public class LeftPath extends LinearOpMode {
 
         Actions.runBlocking(new SequentialAction(
                 ks.lift.setPositionNoBlock(1600, 0.5),
-                //ks.gripperWrist.wristBack(),
                 ks.drive.actionBuilder(startPose)
-                        //.setTangent(Math.toRadians(0.0))
                         .strafeToLinearHeading(new Vector2d(-41.375, 3.0), Math.toRadians(180.0))
-                        //.splineToConstantHeading(new Vector2d(-41.5, 3.0), Math.toRadians(180.0))
-                        //.splineTo(new Vector2d(-39, 3.0), Math.toRadians(180.0))
                         .build(),
                 ks.gripperWrist.wristBack(),
                 new SleepAction(1),
                 ks.lift.setPositionNoBlock(0, 0.5),
-                new SleepAction(1),
+                new SleepAction(0.50),
                 ks.gripper.gripperOpen(),
+                new SleepAction(0.50),
                 ks.drive.actionBuilder(new Pose2d(-41.375, 3.0, Math.toRadians(180.0)))
                         .strafeToLinearHeading(new Vector2d(-50, 48.75), Math.toRadians(0.0))
                         .strafeToLinearHeading(new Vector2d(-31.75, 48.75), Math.toRadians(0.0))
                         .build(),
-               // new SleepAction(2),
                 ks.wrist.wristDown(),
                 new SleepAction(1),
                 ks.intake.intakeIn(),

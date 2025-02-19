@@ -6,9 +6,11 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.*;
 @Disabled
+@TeleOp
 public final class ManualFeedbackTuner extends LinearOpMode {
     public static double DISTANCE = 64;
 

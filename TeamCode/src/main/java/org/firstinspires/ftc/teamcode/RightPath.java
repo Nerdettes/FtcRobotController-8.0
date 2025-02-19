@@ -56,15 +56,15 @@ public class RightPath extends LinearOpMode {
                 ks.gripperWrist.wristBack(),
                 new SleepAction(1),
                 ks.lift.setPositionNoBlock(0, 0.5),
-                new SleepAction(1),
+                new SleepAction(.50),
+                ks.gripper.gripperOpen(),
+                new SleepAction(0.50),
                 ks.drive.actionBuilder(new Pose2d(-41.375, -3.0, Math.toRadians(180.0)))
                         .strafeToLinearHeading(new Vector2d(-50, -47.5), Math.toRadians(0.0))
                         .build(),
-                ks.gripper.gripperOpen(),
                 ks.drive.actionBuilder(new Pose2d(-50.0, -47.5, Math.toRadians(0.0)))
                         .strafeToLinearHeading(new Vector2d(-32.0, -47.5), Math.toRadians(0.0))
                         .build(),
-               // new SleepAction(2),
                 ks.wrist.wristDown(),
                 new SleepAction(1),
                 ks.intake.intakeIn(),
@@ -74,13 +74,12 @@ public class RightPath extends LinearOpMode {
                 ks.drive.actionBuilder(new Pose2d(-31.75, -47.5, Math.toRadians(0.0)))
                         .strafeToLinearHeading(new Vector2d(-49.5, -47.5), Math.toRadians(0.0))
                         .build(),
-                //new SleepAction(1),
                 ks.gripper.gripperOpen(),
                 ks.gripperWrist.wristWall(),
                 new SleepAction(.5),
                 ks.drive.actionBuilder(new Pose2d(-49.5, -47.5, Math.toRadians(0.0)))
-                                .strafeToLinearHeading(new Vector2d(-52.0, -47.5), Math.toRadians(0.0))
-                                        .build(),
+                        .strafeToLinearHeading(new Vector2d(-52.0, -47.5), Math.toRadians(0.0))
+                        .build(),
                 ks.gripper.gripperClosed(),
                 new SleepAction(.5),
                 ks.lift.setPosition(1600, 0.5),
@@ -88,16 +87,15 @@ public class RightPath extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-41.375, -1.0), Math.toRadians(180.0))
                         .build(),
                 ks.lift.setPositionNoBlock(0, 0.5),
-                new SleepAction(1),
+                new SleepAction(0.50),
+                ks.gripper.gripperOpen(),
+                new SleepAction(0.5),
                 ks.wrist.wristInit(),
                 ks.intakeSlide.setPositionNoBlock(0),
                 ks.drive.actionBuilder(new Pose2d(-41.375, -1.0, Math.toRadians(180.0)))
-                      .strafeToLinearHeading(new Vector2d(-64.0, -61.0), Math.toRadians(180.0))
+                        .strafeToLinearHeading(new Vector2d(-64.0, -61.0), Math.toRadians(180.0))
                         .build(),
-                        //.strafeToLinearHeading(new Vector2d(-12.5, -28), Math.toRadians(90.0))
-                      //  .build(),
                 new SleepAction(1)
-              //  ks.gripperWrist.wristWall()
                 )
         );
         // utils.setArm(actuatorUtils.ArmModes.REST);
