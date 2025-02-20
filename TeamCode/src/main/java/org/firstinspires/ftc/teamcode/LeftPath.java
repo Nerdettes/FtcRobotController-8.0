@@ -59,9 +59,9 @@ public class LeftPath extends LinearOpMode {
                 ks.gripperWrist.wristBack(),
                 new SleepAction(1),
                 ks.lift.setPositionNoBlock(0, 0.5),
-                new SleepAction(0.50),
+                new SleepAction(0.75),
                 ks.gripper.gripperOpen(),
-                new SleepAction(0.50),
+                new SleepAction(0.25),
                 ks.drive.actionBuilder(new Pose2d(-41.375, 3.0, Math.toRadians(180.0)))
                         .strafeToLinearHeading(new Vector2d(-50, 48.75), Math.toRadians(0.0))
                         .strafeToLinearHeading(new Vector2d(-31.75, 48.75), Math.toRadians(0.0))
