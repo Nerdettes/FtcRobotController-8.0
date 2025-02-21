@@ -63,17 +63,16 @@ public class LeftPath extends LinearOpMode {
                 ks.gripper.gripperOpen(),
                 new SleepAction(0.25),
                 ks.drive.actionBuilder(new Pose2d(-41.375, 3.0, Math.toRadians(180.0)))
-                        .strafeToLinearHeading(new Vector2d(-50, 48.75), Math.toRadians(0.0))
-                        .strafeToLinearHeading(new Vector2d(-31.75, 48.75), Math.toRadians(0.0))
+                        .strafeToLinearHeading(new Vector2d(-50, 48.5), Math.toRadians(0.0))
+                        .strafeToLinearHeading(new Vector2d(-31.50, 48.5), Math.toRadians(0.0))
                         .build(),
                 ks.wrist.wristDown(),
-                new SleepAction(1),
                 ks.intake.intakeIn(),
-                new SleepAction(1),
+                new SleepAction(2),
                 ks.intake.intakeOff(),
                 ks.handoff(),
                 ks.lift.setPosition(1600,0.5),
-                ks.drive.actionBuilder(new Pose2d(-31.75, 48.75, Math.toRadians(0.0)))
+                ks.drive.actionBuilder(new Pose2d(-31.50, 48.5, Math.toRadians(0.0)))
                         .strafeToLinearHeading(new Vector2d(-52.25, 52.25), Math.toRadians(-45.0))
                         .build(),
                 ks.gripper.gripperOpen(),

@@ -56,22 +56,22 @@ public class RightPath extends LinearOpMode {
                 ks.gripperWrist.wristBack(),
                 new SleepAction(1),
                 ks.lift.setPositionNoBlock(0, 0.5),
-                new SleepAction(.50),
+                new SleepAction(0.75),
                 ks.gripper.gripperOpen(),
-                new SleepAction(0.50),
+                new SleepAction(0.25),
                 ks.drive.actionBuilder(new Pose2d(-41.375, -3.0, Math.toRadians(180.0)))
                         .strafeToLinearHeading(new Vector2d(-50, -47.5), Math.toRadians(0.0))
                         .build(),
                 ks.drive.actionBuilder(new Pose2d(-50.0, -47.5, Math.toRadians(0.0)))
-                        .strafeToLinearHeading(new Vector2d(-32.0, -47.5), Math.toRadians(0.0))
+                        .strafeToLinearHeading(new Vector2d(-33.0, -47.5), Math.toRadians(0.0))
                         .build(),
                 ks.wrist.wristDown(),
-                new SleepAction(1),
                 ks.intake.intakeIn(),
-                new SleepAction(1),
+                new SleepAction(2),
                 ks.intake.intakeOff(),
+                ks.wrist.wristInit(),
                 ks.handoff(),
-                ks.drive.actionBuilder(new Pose2d(-31.75, -47.5, Math.toRadians(0.0)))
+                ks.drive.actionBuilder(new Pose2d(-33.0, -47.5, Math.toRadians(0.0)))
                         .strafeToLinearHeading(new Vector2d(-49.5, -47.5), Math.toRadians(0.0))
                         .build(),
                 ks.gripper.gripperOpen(),
@@ -87,15 +87,14 @@ public class RightPath extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-41.375, -1.0), Math.toRadians(180.0))
                         .build(),
                 ks.lift.setPositionNoBlock(0, 0.5),
-                new SleepAction(0.50),
+                new SleepAction(0.75),
                 ks.gripper.gripperOpen(),
-                new SleepAction(0.5),
+                new SleepAction(0.25),
                 ks.wrist.wristInit(),
                 ks.intakeSlide.setPositionNoBlock(0),
                 ks.drive.actionBuilder(new Pose2d(-41.375, -1.0, Math.toRadians(180.0)))
                         .strafeToLinearHeading(new Vector2d(-64.0, -61.0), Math.toRadians(180.0))
-                        .build(),
-                new SleepAction(1)
+                        .build()
                 )
         );
         // utils.setArm(actuatorUtils.ArmModes.REST);
