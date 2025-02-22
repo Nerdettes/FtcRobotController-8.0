@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.content.Context;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.Pose2d;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,11 +13,11 @@ import java.io.OutputStreamWriter;
 
 public class fileUtils {
 
-    public class Param {
+    public static class Param {
         Pose2d pose;
     }
 
-    private String configFileName = "FtcRobotConfig.txt";
+    public String configFileName = "FtcRobotConfig.txt";
     public Param param;
 
     public fileUtils() {
@@ -35,9 +35,9 @@ public class fileUtils {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(configFileName, Context.MODE_PRIVATE));
 
             // write each configuration parameter as a string on its own line
-            outputStreamWriter.write(Double.toString(param.pose.getX())+"\n");
-            outputStreamWriter.write(Double.toString(param.pose.getY())+"\n");
-            outputStreamWriter.write(Double.toString(param.pose.getHeading())+"\n");
+            outputStreamWriter.write(param.pose.position.y+"\n");
+            outputStreamWriter.write(param.pose.position.x+"\n");
+            outputStreamWriter.write(param.pose.heading.toString()+"\n");
             outputStreamWriter.close();
         }
         catch (IOException e) {

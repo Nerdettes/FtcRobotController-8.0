@@ -2,12 +2,12 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.RADIANS;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -16,11 +16,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+@Disabled
 
 @TeleOp(name="Competition Teleop2024NewRobot", group="Iterative Opmode")
 public class CompetitionTeleop2024NewRobot extends OpMode {
     // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
+    public ElapsedTime runtime = new ElapsedTime();
     //Declare the wheels
     //test
     private DcMotor LF = null; //Located on Control Hub- Motor port 0
@@ -37,25 +38,7 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
     // positive Y on right joystick will be intake, negative = outtake
     private CRServo intake = null; //Located on Expansion Hub- Servo port 2
 
-
-    //private Servo elbow = null; //Located on Expansion Hub- Servo port 0
-    //private Servo gripper = null; //Located on Expansion Hub- Servo port 0
-    //private Servo plane = null; //Located on Expansion Hub- Servo port 0
-
     private IMU imu = null;
-    private fileUtils fUtils;
-
-    //variable for Rev Touch Sensor
-    //private TouchSensor touch;
-
-    private double PowerFactor = 0.8f; //Max power available for wheels
-    private int maxEncode = 4200; //4200 for higher, 2175 for lower-- Max so arm won't overextend and position 3
-    private int minEncode = 110;//Minimum so string on arm lift doesn't break and position 0
-    private int pos1 = 1850; //Position 1
-    private int pos2 = 3000; //Position 2
-    private int desiredpos = 0; //Used as base for increasing arm position
-    private double armPower = 1.0f;
-    private actuatorUtils utils;
 
 
     boolean autoLift = false;
@@ -75,6 +58,8 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
      */
     @Override
     public void init() {
+        fileUtils fUtils;
+
         telemetry.addData("Status", "Initialized");
 
         // Initiali ze the hardware variables. Note that the strings used here as parameters
@@ -88,8 +73,6 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         arm = hardwareMap.get(DcMotor.class, "arm");
         lift = hardwareMap.get(DcMotor.class, "lift");
         wrist = hardwareMap.get(Servo.class, "wrist");
-        utils = new actuatorUtils();
-        utils.initializeActuator(lift, arm, intake, wrist);
 
         intake.setPower(0.0);
         imu = hardwareMap.get(IMU.class, "imu");
@@ -104,7 +87,7 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         fUtils = new fileUtils();
         fUtils.readConfig(hardwareMap.appContext, this);
         Pose2d pose = fUtils.getPose();
-        initHeading = pose.getHeading();
+        initHeading = pose.heading.toDouble();
 
 
         //gripper sensor for pulling arm down
@@ -141,6 +124,8 @@ public class CompetitionTeleop2024NewRobot extends OpMode {
         double RFPower;
         double LBPower;
         double RBPower;
+        double PowerFactor; //Max power available for wheels
+        double armPower = 1.0f;
 
         //Code for gamepad1
         //Code for throttling the power factor
