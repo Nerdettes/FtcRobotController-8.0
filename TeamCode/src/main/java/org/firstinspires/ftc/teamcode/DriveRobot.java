@@ -4,13 +4,10 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="Drive Robot", group="Iterative Opmode")
@@ -80,9 +77,9 @@ public class DriveRobot extends OpMode {
 
         ks.drive.updatePoseEstimate();
 
-        Actions.runBlocking(new SequentialAction(ks.intake.intakeRun(gamepad2.left_stick_y)));
+        Actions.runBlocking(new SequentialAction(ks.mouth.cookie(gamepad2.left_stick_y)));
 
-        Actions.runBlocking(new SequentialAction(ks.intakeSlide.intakeRun(-gamepad2.right_stick_y)));
+        Actions.runBlocking(new SequentialAction(ks.throat.cookie(-gamepad2.right_stick_y)));
 
         if (gamepad2.right_bumper && ! rightBumperIsPressed){
             rightBumperIsPressed = true;
@@ -124,14 +121,14 @@ public class DriveRobot extends OpMode {
             Actions.runBlocking(new SequentialAction(ks.wrist.rotateDown()));
         }
         if (gamepad2.right_trigger > 0.1) {
-            Actions.runBlocking(new SequentialAction(ks.lift.liftRun(gamepad2.right_trigger)));
+            Actions.runBlocking(new SequentialAction(ks.plate.liftRun(gamepad2.right_trigger)));
             liftIsSet = false;
         } else if (gamepad2.left_trigger > 0.1) {
-            Actions.runBlocking(new SequentialAction(ks.lift.liftRun(-gamepad2.left_trigger)));
+            Actions.runBlocking(new SequentialAction(ks.plate.liftRun(-gamepad2.left_trigger)));
             liftIsSet = false;
         } else if (!liftIsSet){
-            int pos = ks.lift.getPosition();
-            Actions.runBlocking(new SequentialAction(ks.lift.setPosition(pos, 0.05)));
+            int pos = ks.plate.getPosition();
+            Actions.runBlocking(new SequentialAction(ks.plate.setPosition(pos, 0.05)));
             liftIsSet = true;
         }
         if (gamepad2.left_bumper) {
@@ -144,8 +141,8 @@ public class DriveRobot extends OpMode {
             Actions.runBlocking(new SequentialAction(ks.gripperWrist.rotateDown()));
         }
         telemetry.addData("Status","Run Time: "+runtime.toString());
-        telemetry.addData("Intake: ", ks.intakeSlide.getPosition());
-        telemetry.addData("Lift: ", ks.lift.getPosition());
+        telemetry.addData("Intake: ", ks.throat.getPosition());
+        telemetry.addData("Lift: ", ks.plate.getPosition());
         telemetry.update();
 
     }

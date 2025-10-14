@@ -7,9 +7,6 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
@@ -52,13 +49,13 @@ public class LeftPath extends LinearOpMode {
         //sleep(5000)
 
         Actions.runBlocking(new SequentialAction(
-                ks.lift.setPositionNoBlock(1600, 0.5),
+                ks.plate.setPositionNoBlock(1600, 0.5),
                 ks.drive.actionBuilder(startPose)
                         .strafeToLinearHeading(new Vector2d(-41.375, 3.0), Math.toRadians(180.0))
                         .build(),
                 ks.gripperWrist.wristBack(),
                 new SleepAction(1),
-                ks.lift.setPositionNoBlock(0, 0.5),
+                ks.plate.setPositionNoBlock(0, 0.5),
                 new SleepAction(0.75),
                 ks.gripper.gripperOpen(),
                 new SleepAction(0.25),
@@ -67,18 +64,18 @@ public class LeftPath extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-31.50, 48.5), Math.toRadians(0.0))
                         .build(),
                 ks.wrist.wristDown(),
-                ks.intake.intakeIn(),
+                ks.mouth.bite(),
                 new SleepAction(2),
-                ks.intake.intakeOff(),
+                ks.mouth.chew(),
                 ks.handoff(),
-                ks.lift.setPosition(1600,0.5),
+                ks.plate.setPosition(1600,0.5),
                 ks.drive.actionBuilder(new Pose2d(-31.50, 48.5, Math.toRadians(0.0)))
                         .strafeToLinearHeading(new Vector2d(-52.25, 52.25), Math.toRadians(-45.0))
                         .build(),
                 ks.gripper.gripperOpen(),
                 new SleepAction(.5),
                 ks.wrist.wristInit(),
-                ks.intakeSlide.setPositionNoBlock(0),
+                ks.throat.setPositionNoBlock(0),
                 ks.drive.actionBuilder(new Pose2d(-52.25, 52.25, Math.toRadians(-45.0)))
                         .strafeToLinearHeading(new Vector2d(-12.5, 48), Math.toRadians(90.0))
                         .strafeToLinearHeading(new Vector2d(-12.5, 28), Math.toRadians(90.0))
@@ -88,7 +85,7 @@ public class LeftPath extends LinearOpMode {
                 )
         );
         // utils.setArm(actuatorUtils.ArmModes.REST);
-        telemetry.addData("IntakeSlide Position: ", ks.intakeSlide.getPosition());
+        telemetry.addData("IntakeSlide Position: ", ks.throat.getPosition());
         telemetry.update();
         //Pose2d pose = drive.getPoseEstimate();
         //fUtils.setPose(pose);

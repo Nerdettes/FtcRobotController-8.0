@@ -1,18 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
-import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
@@ -25,8 +20,8 @@ public class PinpointLeftPath extends LinearOpMode {
 
     private PinpointDrive drive;
 
-    public Intake intake;
-    public IntakeSlide intakeSlide;
+    public Mouth intake;
+    public Throat throat;
     public Wrist wrist;
     public SleepAction sleep1Sec;
 
@@ -41,8 +36,8 @@ public class PinpointLeftPath extends LinearOpMode {
         Pose2d startPose = new Pose2d(-60, 15,0);
         drive = new PinpointDrive(hardwareMap, startPose);
         //utils = new actuatorUtils();
-        intake = new Intake(hardwareMap);
-        intakeSlide = new IntakeSlide(hardwareMap);
+        intake = new Mouth(hardwareMap);
+        throat = new Throat(hardwareMap);
         wrist = new Wrist(hardwareMap);
         sleep1Sec = new SleepAction(1);
         //lift = hardwareMap.get(DcMotor.class, "lift");
@@ -83,9 +78,9 @@ public class PinpointLeftPath extends LinearOpMode {
                         .build(),
                     wrist.wristDown(),
                     new SleepAction(1),
-                    intake.intakeIn(),
+                    intake.bite(),
                     new SleepAction(1),
-                    intake.intakeOff(),
+                    intake.chew(),
                     wrist.wristUp(),
                     drive.actionBuilder(new Pose2d(-34, 49, Math.toRadians(0)))
                         .setTangent(Math.toRadians(180))

@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Disabled
+//@Disabled
 
 @TeleOp(name="TestRobot", group="Iterative Opmode")
 public class TestRobot extends OpMode {
@@ -30,10 +30,11 @@ public class TestRobot extends OpMode {
     private DcMotor LB = null; //Located on Control Hub- Motor port 1
     private DcMotor RB = null; //Located on Control Hub- Motor port 3
     // Left trigger is upward and Right is Downward.
-
+    private DcMotor SR = null; //Located on Control Hub- Motor port 1
+    private DcMotor Sl = null; //Located on Control Hub- Motor port 3
     private IMU imu = null;
 
-
+    private CRServo intake = null; //Located on Control Hub- Servo port 2
 
     boolean disableIMU = true;
 
@@ -58,15 +59,18 @@ public class TestRobot extends OpMode {
         RF = hardwareMap.get(DcMotor.class, "RF");
         LB = hardwareMap.get(DcMotor.class, "LB");
         RB = hardwareMap.get(DcMotor.class, "RB");
+        SR = hardwareMap.get(DcMotor.class, "SR");
+        Sl = hardwareMap.get(DcMotor.class, "SL");
+        intake  = hardwareMap.get(CRServo.class, "intake");
+        intake.setPower(0.0);
+       // imu = hardwareMap.get(IMU.class, "imu");
+       // IMU.Parameters parameters = new IMU.Parameters(
+              //  new RevHubOrientationOnRobot(
+                       // RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                      //  RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD)
+      //  );
 
-        imu = hardwareMap.get(IMU.class, "imu");
-        IMU.Parameters parameters = new IMU.Parameters(
-                new RevHubOrientationOnRobot(
-                        RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                        RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD)
-        );
-
-        imu.initialize(parameters);
+       // imu.initialize(parameters);
 
 
 
@@ -81,7 +85,8 @@ public class TestRobot extends OpMode {
         RF.setDirection(DcMotor.Direction.REVERSE);
         LB.setDirection(DcMotor.Direction.FORWARD);
         RB.setDirection(DcMotor.Direction.REVERSE);
-
+        SR.setDirection(DcMotor.Direction.FORWARD);
+        Sl.setDirection(DcMotor.Direction.REVERSE);
     }
 
     /*
@@ -110,10 +115,10 @@ public class TestRobot extends OpMode {
         //Code for mecanum wheels
 
         double r = Math.hypot(gamepad1.left_stick_x, gamepad1.left_stick_y) * PowerFactor;
-        Orientation angles = imu.getRobotOrientation(AxesReference.INTRINSIC,
-                AxesOrder.ZYX,
-                RADIANS);
-        double heading = (disableIMU) ? 0.0 : angles.firstAngle;
+       // Orientation angles = imu.getRobotOrientation(AxesReference.INTRINSIC,
+              //  AxesOrder.ZYX,
+               // RADIANS);
+        double heading =0.0;// (disableIMU) ? 0.0 : angles.firstAngle;
         //double heading =  initHeading;
         double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4 + heading;
         double rightX = Math.pow(gamepad1.right_stick_x, 1.0)*(1-gamepad1.right_trigger);
@@ -129,8 +134,23 @@ public class TestRobot extends OpMode {
         RB.setPower(RBPower);
         LF.setPower(LFPower);
         RF.setPower(RFPower);
-
-
+        if (gamepad2.a) {
+            SR.setPower(1.0);
+            Sl.setPower(1.0);
+        } else if (gamepad2.b) {
+            SR.setPower(-1.0);
+            Sl.setPower(-1.0);
+        } else {
+            SR.setPower(0.0);
+            Sl.setPower(0.0);
+        }
+        if (gamepad2.x) {
+            intake.setPower(1.0);
+        } else if (gamepad2.y) {
+            intake.setPower(-1.0);
+        } else {
+            intake.setPower(0.0);
+        }
 
         //Send telemetry data of the motor power for wheels
         telemetry.addData("Left Front Motor","Speed: "+ LFPower);
