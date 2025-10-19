@@ -18,7 +18,7 @@ public class PinpointLeftPath extends LinearOpMode {
     private static final int NUMLOOPS = 3 ;
     //test1
 
-    private PinpointDrive drive;
+    private MecanumDrive drive;
 
     public Mouth intake;
     public Throat throat;
@@ -34,7 +34,7 @@ public class PinpointLeftPath extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d startPose = new Pose2d(-60, 15,0);
-        drive = new PinpointDrive(hardwareMap, startPose);
+        drive = new MecanumDrive(hardwareMap, startPose);
         //utils = new actuatorUtils();
         intake = new Mouth(hardwareMap);
         throat = new Throat(hardwareMap);
@@ -140,8 +140,8 @@ public class PinpointLeftPath extends LinearOpMode {
 
 
     public double getHeading() {
-        double angle = drive.pinpoint.getHeading();
-        return angle;
+        //double angle = drive.pinpoint.getHeading();
+        return 0.0;
     }
 
 }

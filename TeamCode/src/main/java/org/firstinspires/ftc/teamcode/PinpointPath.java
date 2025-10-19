@@ -22,7 +22,7 @@ public class PinpointPath extends LinearOpMode {
     private static final int NUMLOOPS = 3 ;
     //test1
 
-    private PinpointDrive drive;
+    private MecanumDrive drive;
     private actuatorUtils utils;
     private PinPointMoveUtils move;
 
@@ -47,7 +47,7 @@ public class PinpointPath extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Pose2d startPose = new Pose2d(-48, 48,Math.toRadians(0));
-        drive = new PinpointDrive(hardwareMap, startPose);
+        drive = new MecanumDrive(hardwareMap, startPose);
         utils = new actuatorUtils();
         //lift = hardwareMap.get(DcMotor.class, "lift");
         //arm = hardwareMap.get(DcMotor.class, "arm");
@@ -98,8 +98,8 @@ public class PinpointPath extends LinearOpMode {
 
 
     public double getHeading() {
-        double angle = drive.pinpoint.getHeading();
-        return angle;
+        //double angle = drive.();
+        return 0.0;
     }
 
 }

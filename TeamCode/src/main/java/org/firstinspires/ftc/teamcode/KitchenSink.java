@@ -7,7 +7,7 @@ import com.acmerobotics.roadrunner.SleepAction;
 
 
 public class KitchenSink {
-    public PinpointDrive drive;
+    public MecanumDrive drive;
     public Mouth mouth;
     public Throat throat;
     public Wrist wrist;
@@ -16,7 +16,7 @@ public class KitchenSink {
     public Plate plate;
 
     public KitchenSink(HardwareMap hardwareMap, Pose2d startPose) {
-        drive = new PinpointDrive(hardwareMap, startPose);
+        drive = new MecanumDrive(hardwareMap, startPose);
         mouth = new Mouth(hardwareMap);
         throat = new Throat(hardwareMap);
         wrist = new Wrist(hardwareMap);

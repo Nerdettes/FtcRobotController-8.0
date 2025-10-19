@@ -94,8 +94,8 @@ public class LeftPath extends LinearOpMode {
 
 
     public double getHeading() {
-        double angle = ks.drive.pinpoint.getHeading();
-        return angle;
+       // double angle = ks.drive.pinpoint.getHeading();
+        return 0.0;
     }
 
 }

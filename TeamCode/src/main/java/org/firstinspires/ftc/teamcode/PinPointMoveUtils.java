@@ -12,13 +12,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class PinPointMoveUtils {
 
-    private static PinpointDrive drive;
+    private static MecanumDrive drive;
     private static actuatorUtils utils;
 
     private static Pose2d beginPose;
 
 
-    public static void initialize(PinpointDrive drive, actuatorUtils utils, Pose2d initialPose){
+    public static void initialize(MecanumDrive drive, actuatorUtils utils, Pose2d initialPose){
         PinPointMoveUtils.drive = drive;
         PinPointMoveUtils.utils = utils;
         PinPointMoveUtils.beginPose = initialPose;

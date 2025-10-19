@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class CookieShooter {
-    private final DcMotor shooter[2]; //Located on Control Hub- Servo port 2
+    private final DcMotor [] shooter = new DcMotor[2]; //Located on Control Hub- Servo port 2
 
     public CookieShooter(HardwareMap hardwareMap) {
         shooter[0] = hardwareMap.get(DcMotor.class, "SR");
