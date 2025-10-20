@@ -17,12 +17,12 @@ public class KitchenSink {
 
     public KitchenSink(HardwareMap hardwareMap, Pose2d startPose) {
         drive = new MecanumDrive(hardwareMap, startPose);
-        mouth = new Mouth(hardwareMap);
-        throat = new Throat(hardwareMap);
-        wrist = new Wrist(hardwareMap);
-        gripperWrist = new GripperWrist(hardwareMap);
-        gripper = new Gripper(hardwareMap);
-        plate = new Plate(hardwareMap);
+        //mouth = new Mouth(hardwareMap);
+        //throat = new Throat(hardwareMap);
+        //wrist = new Wrist(hardwareMap);
+        //gripperWrist = new GripperWrist(hardwareMap);
+        //gripper = new Gripper(hardwareMap);
+        //plate = new Plate(hardwareMap);
     }
     public SequentialAction handoff () {
         return new SequentialAction(
