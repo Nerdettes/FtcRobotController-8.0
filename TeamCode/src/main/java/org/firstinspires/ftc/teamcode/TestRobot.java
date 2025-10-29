@@ -31,7 +31,8 @@ public class TestRobot extends OpMode {
     private DcMotor RB = null; //Located on Control Hub- Motor port 3
     // Left trigger is upward and Right is Downward.
     private DcMotor SR = null; //Located on Control Hub- Motor port 1
-    private DcMotor Sl = null; //Located on Control Hub- Motor port 3
+   private DcMotor Sl = null; //Located on Control Hub- Motor port 3
+    //private CookieShooter CS = null;
     private IMU imu = null;
 
     private CRServo intake = null; //Located on Control Hub- Servo port 2
@@ -61,6 +62,7 @@ public class TestRobot extends OpMode {
         RB = hardwareMap.get(DcMotor.class, "RB");
         SR = hardwareMap.get(DcMotor.class, "SR");
         Sl = hardwareMap.get(DcMotor.class, "SL");
+        //CS = new CookieShooter(hardwareMap);
         intake  = hardwareMap.get(CRServo.class, "intake");
         intake.setPower(0.0);
        // imu = hardwareMap.get(IMU.class, "imu");
