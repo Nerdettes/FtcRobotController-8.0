@@ -18,6 +18,7 @@ public class DriveRobot extends OpMode {
     //test
     private KitchenSink ks;
     private boolean bIsPressed = false;
+    private boolean isEating = false;
     private boolean liftIsSet = false;
     private GripperWrist.WristPosition gripperPos = GripperWrist.WristPosition.Front;
     private boolean xIsPresssed = false;
@@ -77,72 +78,24 @@ public class DriveRobot extends OpMode {
 
         ks.drive.updatePoseEstimate();
 
-        Actions.runBlocking(new SequentialAction(ks.mouth.cookie(gamepad2.left_stick_y)));
-
-        Actions.runBlocking(new SequentialAction(ks.throat.cookie(-gamepad2.right_stick_y)));
-
-        if (gamepad2.right_bumper && ! rightBumperIsPressed){
-            rightBumperIsPressed = true;
-            Actions.runBlocking(ks.handoff());
-        } else if (!gamepad2.right_bumper){
-            rightBumperIsPressed= false;
-
-        }
 
         if (gamepad2.b && ! bIsPressed) {
             bIsPressed = true;
-            if (gripperPos == GripperWrist.WristPosition.Front) {
-                Actions.runBlocking(new SequentialAction(ks.gripperWrist.wristBack()));
-                gripperPos = GripperWrist.WristPosition.Back;
-            } else if (gripperPos == GripperWrist.WristPosition.Wall) {
-                Actions.runBlocking(new SequentialAction(ks.gripperWrist.wristFront()));
-                gripperPos = GripperWrist.WristPosition.Front;
+            if (isEating) {
+                Actions.runBlocking(new SequentialAction(ks.rest()));
+                isEating = false;
             } else {
-                Actions.runBlocking(new SequentialAction(ks.gripperWrist.wristWall()));
-                gripperPos = GripperWrist.WristPosition.Wall;
+                Actions.runBlocking(new SequentialAction(ks.eat()));
+                isEating = true;
             }
+
         } else if (!gamepad2.b) {
             bIsPressed = false;
         }
+        Actions.runBlocking(new SequentialAction(ks.cookie.cookie(gamepad2.right_trigger)));
 
-        if (gamepad2.x && ! xIsPresssed) {
-            xIsPresssed = true;
-            if (gripperIsClosed)
-                Actions.runBlocking(new SequentialAction(ks.gripper.gripperOpen()));
-            else
-                Actions.runBlocking(new SequentialAction(ks.gripper.gripperClosed()));
-            gripperIsClosed = ! gripperIsClosed;
-        } else if (!gamepad2.x) {
-            xIsPresssed = false;
-        }
-        if (gamepad2.y) {
-            Actions.runBlocking(new SequentialAction(ks.wrist.rotateUp()));
-        }  else if (gamepad2.a) {
-            Actions.runBlocking(new SequentialAction(ks.wrist.rotateDown()));
-        }
-        if (gamepad2.right_trigger > 0.1) {
-            Actions.runBlocking(new SequentialAction(ks.plate.liftRun(gamepad2.right_trigger)));
-            liftIsSet = false;
-        } else if (gamepad2.left_trigger > 0.1) {
-            Actions.runBlocking(new SequentialAction(ks.plate.liftRun(-gamepad2.left_trigger)));
-            liftIsSet = false;
-        } else if (!liftIsSet){
-            int pos = ks.plate.getPosition();
-            Actions.runBlocking(new SequentialAction(ks.plate.setPosition(pos, 0.05)));
-            liftIsSet = true;
-        }
-        if (gamepad2.left_bumper) {
-            ks.reset();
-        }
-        if (gamepad2.dpad_up) {
-            Actions.runBlocking(new SequentialAction(ks.gripperWrist.rotateUp()));
-        }
-        else if (gamepad2.dpad_down) {
-            Actions.runBlocking(new SequentialAction(ks.gripperWrist.rotateDown()));
-        }
         telemetry.addData("Status","Run Time: "+runtime.toString());
-        telemetry.addData("Intake: ", ks.throat.getPosition());
-        telemetry.addData("Lift: ", ks.plate.getPosition());
+       // telemetry.addData("Lift: ", ks.plate.getPosition());
         telemetry.update();
 
     }

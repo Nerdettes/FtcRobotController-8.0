@@ -124,6 +124,7 @@ public class TestRobot extends OpMode {
         //double heading =  initHeading;
         double robotAngle = Math.atan2(gamepad1.left_stick_y, gamepad1.left_stick_x) - Math.PI / 4 + heading;
         double rightX = Math.pow(gamepad1.right_stick_x, 1.0)*(1-gamepad1.right_trigger);
+        double rTrig = gamepad2.right_trigger;
         LBPower = r * Math.cos(robotAngle) - rightX;
         RBPower = r * Math.sin(robotAngle) + rightX;
         LFPower = r * Math.sin(robotAngle) - rightX;
@@ -136,16 +137,16 @@ public class TestRobot extends OpMode {
         RB.setPower(RBPower);
         LF.setPower(LFPower);
         RF.setPower(RFPower);
-        if (gamepad2.a) {
-            SR.setPower(1.0);
-            Sl.setPower(1.0);
-        } else if (gamepad2.b) {
-            SR.setPower(-1.0);
-            Sl.setPower(-1.0);
-        } else {
-            SR.setPower(0.0);
-            Sl.setPower(0.0);
-        }
+        //if (gamepad2.a) {
+            SR.setPower(rTrig);
+            Sl.setPower(rTrig);
+       // } else if (gamepad2.b) {
+            //SR.setPower(-1.0);
+            //Sl.setPower(-1.0);
+       // } else {
+            //SR.setPower(0.0);
+            //Sl.setPower(0.0);
+      //  }
         if (gamepad2.x) {
             intake.setPower(1.0);
         } else if (gamepad2.y) {
@@ -159,6 +160,7 @@ public class TestRobot extends OpMode {
         telemetry.addData("Left Back Motor","Speed: "+ LBPower);
         telemetry.addData("Right Front Motor","Speed: "+RFPower);
         telemetry.addData("Right Back Motor","Speed: "+ RBPower);
+        telemetry.addData("shooter power", rTrig);
         //telemetry.addData("Intake Motor", "Speed: = "+ intakePower);
         telemetry.addData("IMU Disable", disableIMU);
 

@@ -10,42 +10,44 @@ public class KitchenSink {
     public MecanumDrive drive;
     public Mouth mouth;
     public Throat throat;
-    public Wrist wrist;
-    public GripperWrist gripperWrist;
-    public Gripper gripper;
     public Plate plate;
+    public CookieShooter cookie;
 
     public KitchenSink(HardwareMap hardwareMap, Pose2d startPose) {
         drive = new MecanumDrive(hardwareMap, startPose);
-        //mouth = new Mouth(hardwareMap);
-        //throat = new Throat(hardwareMap);
-        //wrist = new Wrist(hardwareMap);
-        //gripperWrist = new GripperWrist(hardwareMap);
-        //gripper = new Gripper(hardwareMap);
+        mouth = new Mouth(hardwareMap);
+        cookie = new CookieShooter(hardwareMap);
+        throat = new Throat(hardwareMap);
         //plate = new Plate(hardwareMap);
     }
-    public SequentialAction handoff () {
+    public SequentialAction eat () {
         return new SequentialAction(
-                gripperWrist.wristBack(),
-                gripper.gripperOpen(),
-                wrist.wristInit(),
-                throat.setPosition(600),
-                wrist.wristUp(),
-                new SleepAction(1),
-                gripperWrist.wristFront(),
-                new SleepAction(1),
-                mouth.upChuck(),
-                new SleepAction(0.125),
-                gripper.gripperClosed(),
-                new SleepAction(1),
-                mouth.chew(),
-                gripperWrist.wristBack()
+                throat.ingest(),
+                mouth.bite()
+
         );
     }
-    public void reset() {
-        throat.reset ();
-        plate.reset();
 
+    public SequentialAction shoot (double pow) {
+        return new SequentialAction(
+                eat(),
+                cookie.cookie(pow)
+
+                );
+    }
+    public SequentialAction rest () {
+        return new SequentialAction(
+                throat.digest(),
+                mouth.chew()
+
+                );
+    }
+    public SequentialAction cookieRest () {
+        return new SequentialAction(
+                rest(),
+                cookie.cookie(0)
+
+        );
     }
 }
 
