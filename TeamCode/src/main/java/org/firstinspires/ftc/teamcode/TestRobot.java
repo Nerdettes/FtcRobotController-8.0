@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-//@Disabled
+@Disabled
 
 @TeleOp(name="TestRobot", group="Iterative Opmode")
 public class TestRobot extends OpMode {

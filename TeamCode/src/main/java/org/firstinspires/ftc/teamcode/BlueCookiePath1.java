@@ -1,15 +1,23 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.roadrunner.AccelConstraint;
+import com.acmerobotics.roadrunner.AngularVelConstraint;
+import com.acmerobotics.roadrunner.MinVelConstraint;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.VelConstraint;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
+import java.util.Arrays;
 
 @Autonomous(name = "BlueCookiePath1", group = "")
 public class BlueCookiePath1 extends LinearOpMode {
@@ -42,6 +50,10 @@ public class BlueCookiePath1 extends LinearOpMode {
         Long startTime = System.currentTimeMillis();
         Long currTime = startTime;
 
+        VelConstraint baseVelConstraint = new MinVelConstraint(Arrays.asList(
+                new TranslationalVelConstraint(25.5),
+                new AngularVelConstraint(Math.PI / 2)
+        ));
 
         waitForStart();
         currTime = System.currentTimeMillis();
@@ -49,32 +61,30 @@ public class BlueCookiePath1 extends LinearOpMode {
         //sleep(5000)
         Actions.runBlocking(new SequentialAction(
                 ks.drive.actionBuilder(startPose)
-                        .setTangent(Math.toRadians(180.0))
-                        .lineToXSplineHeading(-24.0, Math.toRadians(45.0))
-                        .setTangent(Math.toRadians(45.0))
-                        .strafeToLinearHeading(new Vector2d(-24.0, 30.0), Math.toRadians(-45.0))
+                       // .setTangent(Math.toRadians(-180.0))
+                        .strafeToLinearHeading(new Vector2d(-24.0, 48.0), Math.toRadians(-90.0))
+                        .strafeToLinearHeading(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0))
                         .build(),
-                ks.shoot(0.5),
-                new SleepAction(1.0),
+                ks.shoot(0.4825),
+                new SleepAction(20.0),
                 ks.cookieRest(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(-24.0, 30.0), Math.toRadians(-45.0)))
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0)))
                         .setTangent(Math.toRadians(-45.0))
                         .strafeToLinearHeading(new Vector2d(-24.0, 12.0), Math.toRadians(180.0))
                         .build(),
                 ks.eat(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-24.0, 12.0), Math.toRadians(180.0)))
-                        .setTangent(Math.toRadians(1800.0))
-                        .lineToXSplineHeading(-54, Math.toRadians(180.0))
-                        .strafeToLinearHeading(new Vector2d(-24.0, 30.0), Math.toRadians(-45.0))
+                        .setTangent(Math.toRadians(180.0))
+                        .splineTo(new Vector2d(-54.0, 12.0), Math.toRadians(180.0))
                         .build(),
-                ks.rest(),
-                ks.shoot(0.5),
-                new SleepAction(1.0),
-                ks.cookieRest(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(-24.0, 30.0), Math.toRadians(-45.0)))
-                        .setTangent(Math.toRadians(-45.0))
-                        .strafeToLinearHeading(new Vector2d(-24.0, 60.0), Math.toRadians(90.0))
-                        .build()
+                ks.rest()
+                //ks.shoot(0.5),
+               // new SleepAction(4.0),
+               // ks.cookieRest(),
+               // ks.drive.actionBuilder(new Pose2d(new Vector2d(-54.0, 12.0), Math.toRadians(180.0)))
+                     //   .setTangent(Math.toRadians(180.0))
+                      //  .strafeToLinearHeading(new Vector2d(-24.0, 60.0), Math.toRadians(90.0))
+                      //  .build()
         ));
 
 

@@ -19,11 +19,13 @@ public class DriveRobot extends OpMode {
     private KitchenSink ks;
     private boolean bIsPressed = false;
     private boolean isEating = false;
+
     private boolean liftIsSet = false;
     private GripperWrist.WristPosition gripperPos = GripperWrist.WristPosition.Front;
     private boolean xIsPresssed = false;
     private boolean gripperIsClosed = true;
     private boolean rightBumperIsPressed = false;
+    private boolean isShooting = false;
 
 
 
@@ -92,13 +94,28 @@ public class DriveRobot extends OpMode {
         } else if (!gamepad2.b) {
             bIsPressed = false;
         }
-        Actions.runBlocking(new SequentialAction(ks.cookie.cookie(gamepad2.right_trigger)));
+
+
+        if (gamepad2.right_bumper && ! rightBumperIsPressed) {
+            rightBumperIsPressed = true;
+            if (isShooting) {
+                Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.0)));
+                isShooting = false;
+            } else {
+                Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.5)));
+                isShooting = true;
+            }
+
+        } else if (!gamepad2.right_bumper) {
+            rightBumperIsPressed = false;
+        }
 
         telemetry.addData("Status","Run Time: "+runtime.toString());
        // telemetry.addData("Lift: ", ks.plate.getPosition());
         telemetry.update();
 
     }
+
 
     /*
      * Code to run ONCE after the driver hits STOP

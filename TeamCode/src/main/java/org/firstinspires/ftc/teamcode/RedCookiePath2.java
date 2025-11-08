@@ -49,33 +49,22 @@ public class RedCookiePath2 extends LinearOpMode {
         //sleep(5000)
         Actions.runBlocking(new SequentialAction(
                 ks.drive.actionBuilder(startPose)
-                        .setTangent(Math.toRadians(-90.0))
-                        .strafeToLinearHeading(new Vector2d(12.0, 18.0), Math.toRadians(120.0))
-                        .setTangent(Math.toRadians(120.0))
-                        .strafeToLinearHeading(new Vector2d(24.0, 30.0), Math.toRadians(225.0))
+                        // .setTangent(Math.toRadians(-180.0))
+                        .strafeToLinearHeading(new Vector2d(10.0, 11.0), Math.toRadians(-135.0))
                         .build(),
-                ks.shoot(0.5),
-                new SleepAction(1.0),
+                ks.shoot(0.4825),
+                new SleepAction(20.0),
                 ks.cookieRest(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(24.0, 30.0), Math.toRadians(224.0)))
-                        .setTangent(Math.toRadians(225.0))
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(10.0, 11.0), Math.toRadians(-135.0)))
+                        .setTangent(Math.toRadians(-135.0))
                         .strafeToLinearHeading(new Vector2d(24.0, -36.0), Math.toRadians(0.0))
                         .build(),
                 ks.eat(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(24.0, -36.0), Math.toRadians(0.0)))
                         .setTangent(Math.toRadians(0.0))
-                        .strafeToLinearHeading(new Vector2d(54.0, -36.0), Math.toRadians(0.0))
-                        .strafeToLinearHeading(new Vector2d(24.0, -36.0), Math.toRadians(225.0))
-                        .strafeToLinearHeading(new Vector2d(24.0, 30.0), Math.toRadians(225.0))
+                        .splineTo(new Vector2d(54.0, -36.0), Math.toRadians(0.0))
                         .build(),
-                ks.rest(),
-                ks.shoot(0.5),
-                new SleepAction(1.0),
-                ks.cookieRest(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(24.0, 30.0), Math.toRadians(225.0)))
-                        .setTangent(Math.toRadians(225.0))
-                        .strafeToLinearHeading(new Vector2d(15.0, -36.0), Math.toRadians(90.0))
-                        .build()
+                ks.rest()
         ));
 
 

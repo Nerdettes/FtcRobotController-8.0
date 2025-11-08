@@ -6,11 +6,12 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-
+@Disabled
 @Autonomous(name = "RedCookiePath4", group = "")
 public class RedCookiePath4 extends LinearOpMode {
     private static final int NUMLOOPS = 3 ;
@@ -55,7 +56,7 @@ public class RedCookiePath4 extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-24.0, 30.0), Math.toRadians(225.0))
                         .build(),
                 ks.shoot(0.5),
-                new SleepAction(1.0),
+                new SleepAction(4.0),
                 ks.cookieRest(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-24.0, 30.0), Math.toRadians(225.0)))
                         .setTangent(Math.toRadians(225.0))
@@ -70,7 +71,7 @@ public class RedCookiePath4 extends LinearOpMode {
                         .build(),
                 ks.rest(),
                 ks.shoot(0.5),
-                new SleepAction(1.0),
+                new SleepAction(4.0),
                 ks.cookieRest(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-24.0, 30.0), Math.toRadians(225.0)))
                         .setTangent(Math.toRadians(225.0))
