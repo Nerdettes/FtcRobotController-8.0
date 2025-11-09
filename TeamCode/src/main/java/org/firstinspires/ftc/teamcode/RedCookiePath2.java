@@ -52,7 +52,7 @@ public class RedCookiePath2 extends LinearOpMode {
                         // .setTangent(Math.toRadians(-180.0))
                         .strafeToLinearHeading(new Vector2d(10.0, 11.0), Math.toRadians(-135.0))
                         .build(),
-                ks.shoot(0.4825),
+                ks.shoot(0.49),
                 new SleepAction(20.0),
                 ks.cookieRest(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(10.0, 11.0), Math.toRadians(-135.0)))
