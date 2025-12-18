@@ -2,18 +2,16 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-@Disabled
-@Autonomous(name = "RedCookiePath4", group = "")
-public class RedCookiePath4 extends LinearOpMode {
+
+@Autonomous(name = "RedCookiePath6FrontLeave", group = "")
+public class RedCookiePath6FrontLeave extends LinearOpMode {
     private static final int NUMLOOPS = 3 ;
     //test1
     private KitchenSink ks;
@@ -30,7 +28,7 @@ public class RedCookiePath4 extends LinearOpMode {
     private fileUtils fUtils;
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d startPose = new Pose2d(-9.0, -69.0,Math.toRadians(-90.0));
+        Pose2d startPose = new Pose2d(61.0, 43.0,Math.toRadians(-0.0));
         ks = new KitchenSink(hardwareMap, startPose);
 
         //drive.setPoseEstimate(startPose);
@@ -50,32 +48,8 @@ public class RedCookiePath4 extends LinearOpMode {
         //sleep(5000)
         Actions.runBlocking(new SequentialAction(
                 ks.drive.actionBuilder(startPose)
-                        .setTangent(Math.toRadians(-90.0))
-                        .strafeToLinearHeading(new Vector2d(-12.0, 18.0), Math.toRadians(120.0))
-                        .setTangent(Math.toRadians(60.0))
-                        .strafeToLinearHeading(new Vector2d(-24.0, 30.0), Math.toRadians(225.0))
-                        .build(),
-                ks.shoot(0.5),
-                new SleepAction(4.0),
-                ks.cookieRest(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(-24.0, 30.0), Math.toRadians(225.0)))
-                        .setTangent(Math.toRadians(225.0))
-                        .strafeToLinearHeading(new Vector2d(-24.0, -12.0), Math.toRadians(0.0))
-                        .build(),
-                ks.eat(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(-24.0, -12.0), Math.toRadians(0.0)))
-                        .setTangent(Math.toRadians(0.0))
-                        .strafeToLinearHeading(new Vector2d(-54.0, -12.0), Math.toRadians(0.0))
-                        .strafeToLinearHeading(new Vector2d(-24.0, -12.0), Math.toRadians(225.0))
-                        .strafeToLinearHeading(new Vector2d(-24.0, 30.0), Math.toRadians(225.0))
-                        .build(),
-                ks.rest(),
-                ks.shoot(0.5),
-                new SleepAction(4.0),
-                ks.cookieRest(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(-24.0, 30.0), Math.toRadians(225.0)))
-                        .setTangent(Math.toRadians(225.0))
-                        .strafeToLinearHeading(new Vector2d(-24.0, 60.0), Math.toRadians(90.0))
+                        // .setTangent(Math.toRadians(-180.0))
+                        .strafeToLinearHeading(new Vector2d(24.0, 48.0), Math.toRadians(-0.0))
                         .build()
         ));
 

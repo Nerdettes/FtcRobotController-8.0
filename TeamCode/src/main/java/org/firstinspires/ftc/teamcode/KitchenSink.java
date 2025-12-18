@@ -30,8 +30,10 @@ public class KitchenSink {
 
     public SequentialAction shoot (double pow) {
         return new SequentialAction(
-                eat(),
-                cookie.cookie(pow)
+                cookie.cookie(pow),
+                new SleepAction(1.0),
+                mouth.bite(),
+                throat.ingest()
 
                 );
     }

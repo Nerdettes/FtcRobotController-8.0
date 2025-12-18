@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -11,8 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "BlueCookiePath6", group = "")
-public class BlueCookiePath6 extends LinearOpMode {
+@Autonomous(name = "BlueCookiePath5BackLeave", group = "")
+public class BlueCookiePath5BackLeave extends LinearOpMode {
     private static final int NUMLOOPS = 3 ;
     //test1
     private KitchenSink ks;
@@ -29,7 +28,7 @@ public class BlueCookiePath6 extends LinearOpMode {
     private fileUtils fUtils;
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d startPose = new Pose2d(-61.0, 43.0,Math.toRadians(180.0));
+        Pose2d startPose = new Pose2d(-24.0, -69.0,Math.toRadians(-90.0));
         ks = new KitchenSink(hardwareMap, startPose);
 
         //drive.setPoseEstimate(startPose);
@@ -50,7 +49,7 @@ public class BlueCookiePath6 extends LinearOpMode {
         Actions.runBlocking(new SequentialAction(
                 ks.drive.actionBuilder(startPose)
                         // .setTangent(Math.toRadians(-180.0))
-                        .strafeToLinearHeading(new Vector2d(-24.0, 48.0), Math.toRadians(-90.0))
+                        .strafeToLinearHeading(new Vector2d(-24.0, -45.0), Math.toRadians(-90.0))
                         .build()
         ));
 

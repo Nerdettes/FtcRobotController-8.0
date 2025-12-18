@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="Drive Robot", group="Iterative Opmode")
-public class DriveRobot extends OpMode {
+@TeleOp(name="Test Shooter", group="Iterative Opmode")
+public class TestShooter extends OpMode {
     // Declare OpMode members.
     public ElapsedTime runtime = new ElapsedTime();
     //Declare the wheels
@@ -19,17 +19,15 @@ public class DriveRobot extends OpMode {
     private KitchenSink ks;
     private boolean bIsPressed = false;
     private boolean isEating = false;
-    private boolean isIngesting = false;
 
     private boolean liftIsSet = false;
     private GripperWrist.WristPosition gripperPos = GripperWrist.WristPosition.Front;
     private boolean xIsPresssed = false;
     private boolean gripperIsClosed = true;
     private boolean rightBumperIsPressed = false;
-    private boolean leftBumperIsPressed = false;
     private boolean isShooting = false;
-    private boolean aIsPressed = false;
-    private boolean isLobbing = false;
+    double shooterPwr = 0.0;
+    private boolean leftBumperIsPressed = false;
 
 
 
@@ -87,64 +85,42 @@ public class DriveRobot extends OpMode {
 
         if (gamepad2.b && ! bIsPressed) {
             bIsPressed = true;
-            if (isShooting) {
-                Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.0)));
-                isShooting = false;
+            if (isEating) {
+                Actions.runBlocking(new SequentialAction(ks.rest()));
+                isEating = false;
             } else {
-                Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.5)));
-                isShooting = true;
+                Actions.runBlocking(new SequentialAction(ks.eat()));
+                isEating = true;
             }
-
 
         } else if (!gamepad2.b) {
             bIsPressed = false;
         }
 
-        if (gamepad2.a && ! aIsPressed) {
-            aIsPressed = true;
-            if (isLobbing) {
-                Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.0)));
-                isLobbing = false;
-            } else {
-                Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.7)));
-                isLobbing = true;
-            }
-
-
-        } else if (!gamepad2.a) {
-            aIsPressed = false;
-        }
-
 
         if (gamepad2.right_bumper && ! rightBumperIsPressed) {
             rightBumperIsPressed = true;
-            if (isIngesting) {
-                Actions.runBlocking(new SequentialAction(ks.throat.digest()));
-                isIngesting = false;
-            } else {
-                Actions.runBlocking(new SequentialAction(ks.throat.ingest()));
-                isIngesting = true;
+            if (shooterPwr<1.0) {
+                shooterPwr = shooterPwr + 0.1;
             }
 
         } else if (!gamepad2.right_bumper) {
             rightBumperIsPressed = false;
         }
+
         if (gamepad2.left_bumper && ! leftBumperIsPressed) {
             leftBumperIsPressed = true;
-            if (isEating) {
-                Actions.runBlocking(new SequentialAction(ks.mouth.chew()));
-                isEating = false;
-            } else {
-                Actions.runBlocking(new SequentialAction(ks.mouth.bite()));
-                isEating = true;
+            if (shooterPwr>0.0) {
+                shooterPwr = shooterPwr - 0.1;
             }
 
         } else if (!gamepad2.left_bumper) {
             leftBumperIsPressed = false;
         }
+        Actions.runBlocking(new SequentialAction(ks.cookie.cookie(shooterPwr)));
 
         telemetry.addData("Status","Run Time: "+runtime.toString());
-       // telemetry.addData("Lift: ", ks.plate.getPosition());
+        telemetry.addData("Shooter: ", shooterPwr);
         telemetry.update();
 
     }

@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "RedCookiePath6", group = "")
-public class RedCookiePath6 extends LinearOpMode {
+@Autonomous(name = "RedCookiePath1Front", group = "")
+public class RedCookiePath1Front extends LinearOpMode {
     private static final int NUMLOOPS = 3 ;
     //test1
     private KitchenSink ks;
@@ -51,7 +51,21 @@ public class RedCookiePath6 extends LinearOpMode {
                 ks.drive.actionBuilder(startPose)
                         // .setTangent(Math.toRadians(-180.0))
                         .strafeToLinearHeading(new Vector2d(24.0, 48.0), Math.toRadians(-0.0))
-                        .build()
+                        .strafeToLinearHeading(new Vector2d(10.0, 11.0), Math.toRadians(-135.0))
+                        .build(),
+                ks.shoot(0.4825),
+                new SleepAction(10.0),
+                ks.cookieRest(),
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(10.0, 11.0), Math.toRadians(-135.0)))
+                        .setTangent(Math.toRadians(-135.0))
+                        .strafeToLinearHeading(new Vector2d(24.0, 12.0), Math.toRadians(0.0))
+                        .build(),
+                ks.eat(),
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(24.0, 12.0), Math.toRadians(0.0)))
+                        .setTangent(Math.toRadians(0.0))
+                        .splineTo(new Vector2d(54.0, 12.0), Math.toRadians(0.0))
+                        .build(),
+                ks.rest()
         ));
 
 

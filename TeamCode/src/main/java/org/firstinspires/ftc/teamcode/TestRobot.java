@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.RADIANS;
 
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -26,9 +28,13 @@ public class TestRobot extends OpMode {
     //Declare the wheels
     //test
     private DcMotor LF = null; //Located on Control Hub- Motor port 0
+    private KitchenSink ks;
     private DcMotor RF = null; //Located on Control Hub- Motor port 2
     private DcMotor LB = null; //Located on Control Hub- Motor port 1
     private DcMotor RB = null; //Located on Control Hub- Motor port 3
+    private boolean aIsPressed = false;
+    double rTrig = 0.0;
+    private boolean isEating = false;
     // Left trigger is upward and Right is Downward.
     private DcMotor SR = null; //Located on Control Hub- Motor port 1
    private DcMotor Sl = null; //Located on Control Hub- Motor port 3
@@ -137,16 +143,19 @@ public class TestRobot extends OpMode {
         RB.setPower(RBPower);
         LF.setPower(LFPower);
         RF.setPower(RFPower);
-        //if (gamepad2.a) {
-            SR.setPower(rTrig);
-            Sl.setPower(rTrig);
-       // } else if (gamepad2.b) {
-            //SR.setPower(-1.0);
-            //Sl.setPower(-1.0);
-       // } else {
-            //SR.setPower(0.0);
-            //Sl.setPower(0.0);
-      //  }
+        if (gamepad2.a && ! aIsPressed) {
+            aIsPressed = true;
+            if (isEating) {
+                Actions.runBlocking(new SequentialAction(ks.rest()));
+                isEating = false;
+            } else {
+                Actions.runBlocking(new SequentialAction(ks.eat()));
+                isEating = true;
+            }
+
+        } else if (!gamepad2.a) {
+            aIsPressed = false;
+        }
         if (gamepad2.x) {
             intake.setPower(1.0);
         } else if (gamepad2.y) {
