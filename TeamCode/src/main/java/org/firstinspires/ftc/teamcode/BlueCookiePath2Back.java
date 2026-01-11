@@ -73,15 +73,15 @@ public class BlueCookiePath2Back extends LinearOpMode {
                 ks.eat(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-24.0, -36.0), Math.toRadians(180.0)))
                         .setTangent(Math.toRadians(180.0))
-                        .splineTo(new Vector2d(-54.0, -36.0), Math.toRadians(180.0),new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(20.0),new AngularVelConstraint(Math.PI / 2))))
+                        .splineTo(new Vector2d(-65.0, -36.0), Math.toRadians(180.0),new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(15.0),new AngularVelConstraint(Math.PI / 2))))
                         .build(),
-                ks.rest(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(-54.0, -36.0), Math.toRadians(180.0)))
-                        // .setTangent(Math.toRadians(-180.0))
+                ks.throat.digest(),
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(-65.0, -36.0), Math.toRadians(180.0)))
+                        .lineToX(-24.0,new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(50.0),new AngularVelConstraint(Math.PI / 2))))
                         .strafeToLinearHeading(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0))
                         .build(),
                 ks.shoot(0.49),
-                new SleepAction(5.0),
+                new SleepAction(6.0),
                 ks.cookieRest(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0)))
                         .setTangent(Math.toRadians(-45.0))

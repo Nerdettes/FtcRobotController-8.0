@@ -37,6 +37,15 @@ public class KitchenSink {
 
                 );
     }
+    public SequentialAction shootFar (double pow) {
+        return new SequentialAction(
+                cookie.cookie(pow),
+                new SleepAction(2.0),
+                mouth.bite(),
+                throat.ingest()
+
+        );
+    }
     public SequentialAction rest () {
         return new SequentialAction(
                 throat.digest(),
