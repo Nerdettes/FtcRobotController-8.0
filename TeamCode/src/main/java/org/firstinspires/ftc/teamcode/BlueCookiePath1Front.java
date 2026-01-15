@@ -64,18 +64,26 @@ public class BlueCookiePath1Front extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0))
                         .build(),
                 ks.shoot(0.4825),
-                new SleepAction(10.0),
+                new SleepAction(5.0),
                 ks.cookieRest(),
+                ks.eat(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0)))
                         .setTangent(Math.toRadians(-45.0))
                         .strafeToLinearHeading(new Vector2d(-24.0, 12.0), Math.toRadians(180.0))
+                        .lineToX(-58.0,new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(15.0),new AngularVelConstraint(Math.PI / 2))))
                         .build(),
-                ks.eat(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(-24.0, 12.0), Math.toRadians(180.0)))
-                        .setTangent(Math.toRadians(180.0))
-                        .splineTo(new Vector2d(-54.0, 12.0), Math.toRadians(180.0))
+                ks.throat.digest(),
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(-58.0, 12.0), Math.toRadians(180.0)))
+                        .lineToX(-24.0,new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(50.0),new AngularVelConstraint(Math.PI / 2))))
+                        .strafeToLinearHeading(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0))
                         .build(),
-                ks.rest()
+                ks.shoot(0.4825),
+                new SleepAction(6.0),
+                ks.cookieRest(),
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0)))
+                        .setTangent(Math.toRadians(-45.0))
+                        .strafeToLinearHeading(new Vector2d(-10.0, 29.0), Math.toRadians(-90.0))
+                        .build()
                 //ks.shoot(0.5),
                // new SleepAction(4.0),
                // ks.cookieRest(),

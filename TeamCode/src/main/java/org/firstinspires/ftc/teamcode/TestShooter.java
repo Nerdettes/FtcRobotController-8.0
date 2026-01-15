@@ -101,7 +101,7 @@ public class TestShooter extends OpMode {
         if (gamepad2.right_bumper && ! rightBumperIsPressed) {
             rightBumperIsPressed = true;
             if (shooterPwr<1.0) {
-                shooterPwr = shooterPwr + 0.1;
+                shooterPwr = shooterPwr + 0.01;
             }
 
         } else if (!gamepad2.right_bumper) {
@@ -111,7 +111,7 @@ public class TestShooter extends OpMode {
         if (gamepad2.left_bumper && ! leftBumperIsPressed) {
             leftBumperIsPressed = true;
             if (shooterPwr>0.0) {
-                shooterPwr = shooterPwr - 0.1;
+                shooterPwr = shooterPwr - 0.01;
             }
 
         } else if (!gamepad2.left_bumper) {

@@ -55,29 +55,29 @@ public class RedCookiePath3BackLeave extends LinearOpMode {
         Actions.runBlocking(new SequentialAction(
                 ks.drive.actionBuilder(startPose)
                         // .setTangent(Math.toRadians(-180.0))
-                        .strafeToLinearHeading(new Vector2d(10.0, -62.0), Math.toRadians(110.0))
+                        .strafeToLinearHeading(new Vector2d(10.0, -62.0), Math.toRadians(-110.0))
                         .build(),
                 ks.shootFar(0.64),
                 new SleepAction(7.0),
                 ks.cookieRest(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(10.0, -62.0), Math.toRadians(110.0)))
-                        .strafeToLinearHeading(new Vector2d(24.0, -36.0), Math.toRadians(180.0))
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(10.0, -62.0), Math.toRadians(-110.0)))
+                        .strafeToLinearHeading(new Vector2d(24.0, -36.0), Math.toRadians(0.0))
                         .build(),
                 ks.eat(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(24.0, -36.0), Math.toRadians(180.0)))
-                        .setTangent(Math.toRadians(180.0))
-                        .splineTo(new Vector2d(65.0, -36.0), Math.toRadians(180.0),new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(15.0),new AngularVelConstraint(Math.PI / 2))))
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(24.0, -36.0), Math.toRadians(0.0)))
+                        .setTangent(Math.toRadians(0.0))
+                        .splineTo(new Vector2d(65.0, -36.0), Math.toRadians(0.0),new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(15.0),new AngularVelConstraint(Math.PI / 2))))
                         .build(),
                 ks.throat.digest(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(65.0, -36.0), Math.toRadians(180.0)))
-                        .lineToX(-24.0,new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(50.0),new AngularVelConstraint(Math.PI / 2))))
-                        .strafeToLinearHeading(new Vector2d(10.0, -62.0), Math.toRadians(110.0))
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(65.0, -36.0), Math.toRadians(0.0)))
+                        .lineToX(24.0,new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(50.0),new AngularVelConstraint(Math.PI / 2))))
+                        .strafeToLinearHeading(new Vector2d(10.0, -62.0), Math.toRadians(-110.0))
                         .build(),
                 ks.shoot(0.64),
                 new SleepAction(7.0),
                 ks.cookieRest(),
-                ks.drive.actionBuilder(new Pose2d(new Vector2d(10.0, -62.0), Math.toRadians(110.0)))
-                        .setTangent(Math.toRadians(-70.0))
+                ks.drive.actionBuilder(new Pose2d(new Vector2d(10.0, -62.0), Math.toRadians(-110.0)))
+                        .setTangent(Math.toRadians(-110.0))
                         .strafeToLinearHeading(new Vector2d(24.0, -45.0), Math.toRadians(-90.0))
                         .build()
         ));

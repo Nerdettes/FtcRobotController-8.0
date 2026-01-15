@@ -106,7 +106,7 @@ public class DriveRobot extends OpMode {
                 Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.0)));
                 isLobbing = false;
             } else {
-                Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.7)));
+                Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.64)));
                 isLobbing = true;
             }
 
