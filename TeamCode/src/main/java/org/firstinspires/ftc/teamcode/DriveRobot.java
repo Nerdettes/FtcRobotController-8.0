@@ -87,6 +87,7 @@ public class DriveRobot extends OpMode {
 
         if (gamepad2.b && ! bIsPressed) {
             bIsPressed = true;
+            isLobbing = false;
             if (isShooting) {
                 Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.0)));
                 isShooting = false;
@@ -102,6 +103,7 @@ public class DriveRobot extends OpMode {
 
         if (gamepad2.a && ! aIsPressed) {
             aIsPressed = true;
+            isShooting = false;
             if (isLobbing) {
                 Actions.runBlocking(new SequentialAction(ks.cookie.cookie(0.0)));
                 isLobbing = false;

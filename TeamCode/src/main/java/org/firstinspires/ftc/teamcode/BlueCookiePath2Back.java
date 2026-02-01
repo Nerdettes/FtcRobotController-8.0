@@ -64,7 +64,7 @@ public class BlueCookiePath2Back extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0))
                         .build(),
                 ks.shoot(0.49),
-                new SleepAction(5.0),
+                new SleepAction(5.5),
                 ks.cookieRest(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0)))
                         .setTangent(Math.toRadians(-45.0))
@@ -81,7 +81,7 @@ public class BlueCookiePath2Back extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0))
                         .build(),
                 ks.shoot(0.49),
-                new SleepAction(6.0),
+                new SleepAction(5.5),
                 ks.cookieRest(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0)))
                         .setTangent(Math.toRadians(-45.0))

@@ -64,13 +64,13 @@ public class BlueCookiePath1Front extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0))
                         .build(),
                 ks.shoot(0.4825),
-                new SleepAction(5.0),
+                new SleepAction(5.5),
                 ks.cookieRest(),
                 ks.eat(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0)))
                         .setTangent(Math.toRadians(-45.0))
                         .strafeToLinearHeading(new Vector2d(-24.0, 12.0), Math.toRadians(180.0))
-                        .lineToX(-58.0,new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(15.0),new AngularVelConstraint(Math.PI / 2))))
+                        .lineToX(-60.0,new MinVelConstraint(Arrays.asList(new TranslationalVelConstraint(15.0),new AngularVelConstraint(Math.PI / 2))))
                         .build(),
                 ks.throat.digest(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-58.0, 12.0), Math.toRadians(180.0)))
@@ -78,7 +78,7 @@ public class BlueCookiePath1Front extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0))
                         .build(),
                 ks.shoot(0.4825),
-                new SleepAction(6.0),
+                new SleepAction(5.5),
                 ks.cookieRest(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0)))
                         .setTangent(Math.toRadians(-45.0))

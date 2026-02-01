@@ -58,7 +58,7 @@ public class BlueCookiePath4FrontLeave extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0))
                         .build(),
                 ks.shoot(0.49),
-                new SleepAction(5.0),
+                new SleepAction(5.5),
                 ks.cookieRest(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-10.0, 11.0), Math.toRadians(-45.0)))
                         .strafeToLinearHeading(new Vector2d(-24.0, -36.0), Math.toRadians(180.0))
@@ -74,7 +74,7 @@ public class BlueCookiePath4FrontLeave extends LinearOpMode {
                         .strafeToLinearHeading(new Vector2d(-10.0, -62.0), Math.toRadians(-70.0))
                         .build(),
                 ks.shoot(0.64),
-                new SleepAction(7.0),
+                new SleepAction(5.5),
                 ks.cookieRest(),
                 ks.drive.actionBuilder(new Pose2d(new Vector2d(-10.0, -62.0), Math.toRadians(-70.0)))
                         .setTangent(Math.toRadians(-70.0))
