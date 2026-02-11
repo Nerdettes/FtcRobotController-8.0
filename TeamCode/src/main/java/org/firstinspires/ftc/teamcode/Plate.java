@@ -7,27 +7,27 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Lift {
-    private final DcMotor lift; //Located on Control Hub- Servo port 2
+public class Plate {
+    private final DcMotor plate; //Located on Control Hub- Servo port 2
 
-    public Lift(HardwareMap hardwareMap) {
-        lift = hardwareMap.get(DcMotor.class, "lift");
-        lift.setDirection(DcMotor.Direction.REVERSE);
-        lift.setPower(0);
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    public Plate(HardwareMap hardwareMap) {
+        plate = hardwareMap.get(DcMotor.class, "plate");
+        plate.setDirection(DcMotor.Direction.REVERSE);
+        plate.setPower(0);
+        plate.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        plate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        plate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public int getPosition (){
-        return lift.getCurrentPosition();
+        return plate.getCurrentPosition();
 }
     public class LiftRun implements Action {
         private double pow;
         public LiftRun(double pow) { this.pow = pow;}
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lift.setPower(pow);
+            plate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            plate.setPower(pow);
             return false;
         }
     }
@@ -43,10 +43,10 @@ public class Lift {
         }
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            lift.setTargetPosition(pos); //Lowers arm to min pos.
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(pow);
-            if (lift.isBusy()) {
+            plate.setTargetPosition(pos); //Lowers arm to min pos.
+            plate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            plate.setPower(pow);
+            if (plate.isBusy()) {
                 return true;
             } else {
 
@@ -66,9 +66,9 @@ public class Lift {
         }
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            lift.setTargetPosition(pos); //Lowers arm to min pos.
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            lift.setPower(pow);
+            plate.setTargetPosition(pos); //Lowers arm to min pos.
+            plate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            plate.setPower(pow);
             return false;
         }
     }
@@ -76,9 +76,9 @@ public class Lift {
         return new SetPositionNoBlock(pos, pow);
     }
     public void reset() {
-        lift.setPower(0);
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        plate.setPower(0);
+        plate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        plate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 }
